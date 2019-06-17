@@ -1,0 +1,22 @@
+{{ include("partials/head.html") }}
+{{ include("partials/navbar.html") }}
+
+<div class="container grid-lg">
+    <h1 class="my-2">Profile</h1>
+    <a href="/users" class="btn m-2">Back</a>
+    <div class="card">
+    <form action="store" method="post">
+      <div class="card-body">
+        <h4>{{username}}</h4>
+        <p>{{email}}</p>
+      </div>
+      <div class="card-footer d-flex">
+        <a href="/users/edit/{{ id }}" class="btn btn-success m-1">Edit</a>
+        <form action="/users/destroy" method="post">
+          <input name="id" type="hidden" value="{{ user.id }}">
+          <input class="btn btn-error m-1" type="submit" value="Delete" />
+        </form>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,17 @@
+{{ include("partials/head.html") }}
+{{ include("partials/navbar.html") }}
+
+<div class="container grid-lg">
+    <h1 class="my-2">Create User</h1>
+    <div class="card">
+    <form action="store" method="post">
+      <div class="card-body">
+        Username: <input type="text" name="username" /><br />
+        E-mail: <input type="text" name="email" /><br />
+      </div>
+      <div class="card-footer">
+        <input class="btn btn-primary" type="submit" />
+      </div>
+    </div>
+  </form>
+</div>

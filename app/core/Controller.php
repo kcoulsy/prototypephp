@@ -24,4 +24,10 @@ class Controller
     {
         echo $this->twig->render($view, $data);
     }
+
+    public function redirect($route)
+    {
+        header('Location: ' . $route);
+        die();
+    }
 }

@@ -10,8 +10,12 @@ class App
 
     public function __construct()
     {
+
+        $type = $_SERVER['REQUEST_METHOD'];
+        // return;
         $url = $this->parseUrl();
 
+        // Setting the controller
         if (file_exists('../app/controllers/' . $url[0] . '.php')) {
             $this->controller = $url[0];
             unset($url[0]);
@@ -21,6 +25,7 @@ class App
 
         $this->controller = new $this->controller;
 
+        // setting the method
         if (isset($url[1])) {
             if (method_exists($this->controller, $url[1])) {
                 $this->method = $url[1];
@@ -28,9 +33,15 @@ class App
             }
         }
 
-        $this->params = $url ? array_values($url) : [];
+        // setting the params and call the controller/method
+        if ($type == 'POST') {
+            $this->params = $_POST;
+            call_user_func([$this->controller, $this->method], $this->params);
+        } else {
+            $this->params = $url ? array_values($url) : [];
+            call_user_func_array([$this->controller, $this->method], $this->params);
+        }
 
-        call_user_func_array([$this->controller, $this->method], $this->params);
     }
 
     public function parseUrl()

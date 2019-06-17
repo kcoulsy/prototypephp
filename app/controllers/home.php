@@ -2,7 +2,7 @@
 
 class Home extends Controller
 {
-    public function index($name = 'test')
+    public function index($name = 'World')
     {
         $this->view('home/index.html', ['name' => $name]);
     }
@@ -11,12 +11,4 @@ class Home extends Controller
     {
         $this->view('home/about.html');
     }
-
-    // public function create($username = '', $email = '')
-    // {
-    //     User::create([
-    //         'username' => $username,
-    //         'email' => $email
-    //     ]);
-    // }
 }
