@@ -8,4 +8,3 @@ require_once 'core/Controller.php';
 
 require_once 'database.php';
 
-require_once 'twig.php';

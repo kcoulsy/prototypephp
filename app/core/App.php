@@ -2,17 +2,59 @@
 
 class App
 {
+    /**
+     * The selected controller name.
+     *
+     * @var string
+     */
     protected $controller = 'home';
 
+    /**
+     * The selected method name.
+     *
+     * @var string
+     */
     protected $method = 'index';
 
+    /**
+     * The selected params.
+     *
+     * @var array
+     */
     protected $params = [];
 
+    /**
+     * The request method type.
+     *
+     * @var string
+     */
+    protected $type = 'GET';
+
+    /**
+     * App Constuctor.
+     */
     public function __construct()
     {
+        $this->updateMethod();
+    }
 
-        $type = $_SERVER['REQUEST_METHOD'];
-        // return;
+    /**
+     * Returns the parsed url as an array.
+     *
+     * @return array url
+     */
+    public function parseUrl()
+    {
+        if (isset($_GET['url'])) {
+            return $url = explode('/', filter_var(rtrim($_GET['url'], '/'), FILTER_SANITIZE_URL));
+        }
+    }
+
+    /**
+     * Updates the selected controller, method, params and type.
+     */
+    public function updateMethod()
+    {
         $url = $this->parseUrl();
 
         // Setting the controller
@@ -33,21 +75,27 @@ class App
             }
         }
 
+        $this->type = $_SERVER['REQUEST_METHOD'];
+
         // setting the params and call the controller/method
-        if ($type == 'POST') {
+        if ($this->type == 'POST') {
             $this->params = $_POST;
-            call_user_func([$this->controller, $this->method], $this->params);
         } else {
             $this->params = $url ? array_values($url) : [];
-            call_user_func_array([$this->controller, $this->method], $this->params);
         }
 
+        $this->callMethod();
     }
 
-    public function parseUrl()
+    /**
+     * Calls the controller and method for the selected values.
+     */
+    public function callMethod()
     {
-        if (isset($_GET['url'])) {
-            return $url = explode('/', filter_var(rtrim($_GET['url'], '/'), FILTER_SANITIZE_URL));
+        if ($this->type == 'POST') {
+            call_user_func([$this->controller, $this->method], $this->params);
+        } else {
+            call_user_func_array([$this->controller, $this->method], $this->params);
         }
     }
 }
