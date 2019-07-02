@@ -38,11 +38,21 @@ class Users extends Controller
     /**
      * User profile page.
      *
-     * @param int $id The id of the user to show.
+     * @param array $params
      */
-    public function show($id)
+    public function profile($params)
     {
+        $id = $params['id'];
+
+        if (!isset($id)) {
+            $this->redirect('/users/index');
+        }
+
         $user = User::find($id);
+
+        if (!isset($user)) {
+            $this->redirect('/users/index');
+        }
 
         $this->view('users/show.html', $user->toArray());
 
@@ -51,13 +61,23 @@ class Users extends Controller
     /**
      * User edit page.
      *
-     * @param int $id The id of the user to show.
+     * @param array $params
      */
-    public function edit($id)
+    public function edit($params)
     {
-        $user = User::find($id)->toArray();
+        $id = $params['id'];
 
-        $this->view('users/edit.html', $user);
+        if (!isset($id)) {
+            $this->redirect('/users/index');
+        }
+
+        $user = User::find($id);
+
+        if (!isset($user)) {
+            $this->redirect('/users/index');
+        }
+
+        $this->view('users/edit.html', $user->toArray());
     }
 
     /**

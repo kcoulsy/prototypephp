@@ -7,8 +7,14 @@ class Home extends Controller
      *
      * @param string $name The name displayed on the hero banner.
      */
-    public function index($name = 'World')
+    public function index($params)
     {
+        $name = 'World';
+
+        if (isset($params['name'])) {
+            $name = $params['name'];
+        }
+
         $this->view('home/index.html', ['name' => $name]);
     }
 

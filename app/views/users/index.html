@@ -16,14 +16,14 @@
             {% if users %}
                 {% for user in users %}
                 <tr>
-                    <td><a href="/users/show/{{user.id}}">{{ user.username }}</a></td>
+                    <td><a href="/users/profile?id={{user.id}}">{{ user.username }}</a></td>
                     <td>{{ user.email }}</td>
                     <td class="d-flex">
                         <form action="/users/destroy" method="post" class="float-right">
                             <input name="id" type="hidden" value="{{ user.id }}">
                             <input class="btn btn-error m-1" type="submit" value="Delete" />
                         </form>
-                        <a href="/users/edit/{{user.id}}" class="btn btn-success m-1 float-right">Edit</a>
+                        <a href="/users/edit?id={{user.id}}" class="btn btn-success m-1 float-right">Edit</a>
                     </td>
                 </tr>
                 {% endfor %}
