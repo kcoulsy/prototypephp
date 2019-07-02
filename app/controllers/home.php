@@ -25,4 +25,20 @@ class Home extends Controller
     {
         $this->view('home/about.html');
     }
+
+    /**
+     * Register page
+     */
+    public function register()
+    {
+        $this->view('home/register.html');
+    }
+
+    /**
+     * Login Page
+     */
+    public function login()
+    {
+        $this->view('home/login.html');
+    }
 }
