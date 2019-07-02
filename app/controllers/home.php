@@ -11,8 +11,8 @@ class Home extends Controller
     {
         $name = 'World';
 
-        if (isset($params['name'])) {
-            $name = $params['name'];
+        if (isset($_SESSION["loggedin"])) {
+            $name = $_SESSION["user"]->password;
         }
 
         $this->view('home/index.html', ['name' => $name]);
