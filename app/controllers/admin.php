@@ -8,6 +8,6 @@ class Admin extends Controller
     public function index()
     {
 
-        $this->view('home/index.html');
+        $this->view('admin/index.html');
     }
 }
