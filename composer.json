@@ -1,7 +1,8 @@
 {
     "require": {
         "illuminate/database": "^5.8",
-        "twig/twig": "^2.0"
+        "twig/twig": "^2.0",
+        "robmorgan/phinx": "^0.10.7"
     },
     "autoload": {
         "classmap": [
