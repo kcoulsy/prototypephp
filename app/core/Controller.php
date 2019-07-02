@@ -38,6 +38,30 @@ class Controller
     }
 
     /**
+     * Renders whether or not the user has a session
+     *
+     * @return bool
+     */
+    public function isAuthed()
+    {
+        return isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true;
+    }
+
+    /**
+     * Gets the currently logged in user
+     *
+     * @return User model
+     */
+    public function getUser()
+    {
+        if (!$this->isAuthed()) {
+            return null;
+        }
+
+        return $_SESSION['user'];
+    }
+
+    /**
      * Route to redirect to
      *
      * @var string route

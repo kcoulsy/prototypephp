@@ -9,10 +9,10 @@ class Home extends Controller
      */
     public function index($params)
     {
-        $name = 'World';
+        $user = $this->getUser();
 
-        if (isset($_SESSION["loggedin"])) {
-            $name = $_SESSION["user"]->password;
+        if (isset($user)) {
+            $name = $user->username;
         }
 
         $this->view('home/index.html', ['name' => $name]);
