@@ -9,6 +9,7 @@ class Home extends Controller
      */
     public function index($params)
     {
+        $name = null;
         $user = $this->getUser();
 
         if (isset($user)) {

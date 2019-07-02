@@ -34,6 +34,8 @@ class Controller
      */
     public function view($view, $data = [])
     {
+        $data['user_logged_in'] = $this->isAuthed();
+
         echo $this->twig->render($view, $data);
     }
 
