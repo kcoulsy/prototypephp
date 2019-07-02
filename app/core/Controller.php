@@ -36,6 +36,8 @@ class Controller
     {
         $data['user_logged_in'] = $this->isAuthed();
 
+        $data['route_url'] = '/' . $_GET['url'];
+
         echo $this->twig->render($view, $data);
     }
 
