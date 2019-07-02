@@ -7,6 +7,8 @@ class Users extends Controller
      */
     public function index()
     {
+        $this->requireAuth();
+
         $users = User::all()->toArray();
 
         $this->view('users/index.html', [ 'users' => $users]);

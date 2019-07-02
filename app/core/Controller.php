@@ -64,6 +64,16 @@ class Controller
     }
 
     /**
+     * If the user is not logged in, it redirects to the homepage
+     */
+    public function requireAuth()
+    {
+        if (!$this->isAuthed()) {
+            $this->redirect('/');
+        }
+    }
+
+    /**
      * Route to redirect to
      *
      * @var string route
