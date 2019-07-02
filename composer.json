@@ -2,7 +2,8 @@
     "require": {
         "illuminate/database": "^5.8",
         "twig/twig": "^2.0",
-        "robmorgan/phinx": "^0.10.7"
+        "robmorgan/phinx": "^0.10.7",
+        "vlucas/phpdotenv": "^3.4"
     },
     "autoload": {
         "classmap": [

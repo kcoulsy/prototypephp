@@ -5,11 +5,11 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 $capsule = new Capsule();
 
 $capsule->addConnection([
-    'driver' => 'mysql',
-    'host' => 'localhost',
-    'username' => 'root',
-    'password' => '',
-    'database' => 'mvc',
+    'driver' => getenv('DB_DRIVER'),
+    'host' => getenv('DB_HOST'),
+    'username' => getenv('DB_USERNAME'),
+    'password' => getenv('DB_PASSWORD'),
+    'database' => getenv('DB_DATABASE'),
     'charset' => 'utf8',
     'coolation' => 'urf8_unicode_ci',
     'prefix' => ''
