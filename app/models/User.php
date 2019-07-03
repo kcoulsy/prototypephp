@@ -22,4 +22,9 @@ class User extends Eloquent
         'password',
         'email_verified'
     ];
+
+    public function userVerification()
+    {
+        return $this->hasMany('UserVerification', 'user_id');
+    }
 }

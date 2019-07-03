@@ -45,11 +45,16 @@ class AuthController extends Controller {
 
             $password_hashed = password_hash($password, PASSWORD_DEFAULT);
 
-            User::create([
+            $created_user = User::create([
                 'username' => $username,
                 'email' => $email,
                 'password' => $password_hashed,
                 'email_verified' => false
+            ]);
+
+            UserVerification::create([
+                'user_id' => $created_user->id,
+                'verification_code' => '123sdf'
             ]);
 
             $this->redirect('/');
