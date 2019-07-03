@@ -25,7 +25,6 @@ class UserVerification extends Eloquent
      */
     protected $fillable = [
         'user_id',
-        'email',
         'verification_code'
     ];
 

@@ -54,13 +54,35 @@ class AuthController extends Controller {
 
             UserVerification::create([
                 'user_id' => $created_user->id,
-                'verification_code' => '123sdf'
+                'verification_code' => uniqid()
             ]);
 
             $this->redirect('/');
 
         } catch(Exception $e) {
             throw new Exception($e->getMessage());
+        }
+    }
+
+    public function verifyUser($email, $verification_code)
+    {
+        $user = User::where('email', $email);
+
+        if ($user->count() > 0) {
+
+            $user = $user->first();
+            $user_ver = $user->userVerification->where('verification_code', $verification_code);
+
+            if ($user_ver->count() > 0) {
+                $user->email_verified = true;
+                $user->save();
+                $user_ver->first()->delete();
+            } else {
+                throw new Exception('Invalid Verification Code');
+            }
+
+        } else {
+            throw new Exception('User not found');
         }
     }
 
