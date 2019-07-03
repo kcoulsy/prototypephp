@@ -33,7 +33,6 @@ class CreateUserVerificationTable extends AbstractMigration
     {
         $table = $this->table('user_verification');
         $table->addColumn('user_id', 'integer', ['limit' => 11])
-                ->addColumn('email', 'string', ['limit' => 255])
                 ->addColumn('verification_code', 'string', ['limit' => 255])
                 ->create();
     }
