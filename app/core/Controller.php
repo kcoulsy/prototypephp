@@ -21,9 +21,16 @@ class Controller
      */
     public function __construct()
     {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
         $this->loader = new Twig_Loader_Filesystem('../app/views');
         $this->twig = new Twig_Environment($this->loader);
+
+        if (method_exists($this, 'init')) {
+            call_user_func([$this, 'init']);
+        }
     }
 
     /**

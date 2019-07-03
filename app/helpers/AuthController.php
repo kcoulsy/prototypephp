@@ -30,7 +30,9 @@ class AuthController extends Controller {
 
     protected function startSession($user)
     {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
 
         $_SESSION["loggedin"] = true;
         $_SESSION["user"] = $user;

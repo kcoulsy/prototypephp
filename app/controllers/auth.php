@@ -6,7 +6,7 @@ class Auth extends Controller
 {
     private $auth_controller;
 
-    public function __construct()
+    public function init()
     {
         $this->auth_controller = new AuthController();
     }
