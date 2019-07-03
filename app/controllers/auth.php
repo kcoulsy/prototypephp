@@ -46,6 +46,15 @@ class Auth extends Controller
         }
     }
 
+    public function verify($params)
+    {
+        try {
+            $this->auth_controller->verifyUser($params['email'], $params['verification_code']);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
     public function logout()
     {
         $this->auth_controller->logout();

@@ -52,10 +52,23 @@ class AuthController extends Controller {
                 'email_verified' => false
             ]);
 
+            $verification_code = uniqid();
+
             UserVerification::create([
                 'user_id' => $created_user->id,
-                'verification_code' => uniqid()
+                'verification_code' => $verification_code
             ]);
+
+            $email_con = new EmailController();
+
+            $email_sent = $email_con->send(
+                [$created_user->email => $created_user->username],
+                'Verify your account',
+                $this->twig->render('email/verify_account.html', [
+                    'email' => $created_user->email,
+                    'verification_code' => $verification_code
+                ])
+            );
 
             $this->redirect('/');
 
@@ -77,6 +90,8 @@ class AuthController extends Controller {
                 $user->email_verified = true;
                 $user->save();
                 $user_ver->first()->delete();
+
+                $this->redirect('/');
             } else {
                 throw new Exception('Invalid Verification Code');
             }
