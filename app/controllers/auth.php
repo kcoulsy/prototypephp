@@ -1,5 +1,7 @@
 <?php
 
+// use AuthController;
+
 class Auth extends Controller
 {
     /**
@@ -33,7 +35,7 @@ class Auth extends Controller
     private function validateUsername($params)
     {
         if (!isset($params['username'])) {
-            throw new Error('Please enter a username');
+            throw new Exception('Please enter a username');
         }
 
         $username = trim($params['username']);
@@ -41,7 +43,7 @@ class Auth extends Controller
         $user = User::where('username', $username);
 
         if ($user->count() > 0) {
-            throw new Error('Username Taken');
+            throw new Exception('Username Taken');
         }
 
         return $username;
@@ -50,7 +52,7 @@ class Auth extends Controller
     private function validateEmail($params)
     {
         if (!isset($params['email'])) {
-            throw new Error('Please enter an Email');
+            throw new Exception('Please enter an Email');
         }
 
         $email = trim($params['email']);
@@ -58,7 +60,7 @@ class Auth extends Controller
         $user = User::where('email', $email);
 
         if ($user->count() > 0) {
-            throw new Error('Email Taken');
+            throw new Exception('Email Taken');
         }
 
         return $email;
@@ -67,15 +69,15 @@ class Auth extends Controller
     private function validatePassword($params)
     {
         if (!isset($params['password'])) {
-            throw new Error('Please enter an Password');
+            throw new Exception('Please enter an Password');
         }
 
         if (!isset($params['confirm'])) {
-            throw new Error('Please confirm your Password');
+            throw new Exception('Please confirm your Password');
         }
 
         if ($params['password'] !== $params['confirm']) {
-            throw new Error('Your passwords must match!');
+            throw new Exception('Your passwords must match!');
         }
 
         return $params['password'];
@@ -83,27 +85,17 @@ class Auth extends Controller
 
     public function login($params)
     {
-        if (!isset($params['username'])) {
-            throw new Error('Please enter a username');
-        }
+        try {
 
-        if (!isset($params['password'])) {
-            throw new Error('Please enter an Password');
-        }
+            AuthController::login(
+                $params['username'],
+                $params['password']
+            );
 
-        $user = User::where('username', $params['username'])->first();
-
-        if (!isset($user->username)) {
-            throw new Error('Failed to login');
-        }
-
-        if (password_verify($params['password'], $user->password)) {
-            session_start();
-
-            $_SESSION["loggedin"] = true;
-            $_SESSION["user"] = $user;
-
-            $this->redirect('/');
+        } catch(Exception $e) {
+            $this->view('home/login.html', [
+                'error' => $e->getMessage()
+            ]);
         }
     }
 
