@@ -2,11 +2,6 @@
 
 class AuthController extends Controller {
 
-    public function __construct()
-    {
-
-    }
-
     public function login($username, $password)
     {
         if (!isset($username)) {
@@ -24,12 +19,30 @@ class AuthController extends Controller {
         }
 
         if (password_verify($password, $user->password)) {
-            session_start();
-
-            $_SESSION["loggedin"] = true;
-            $_SESSION["user"] = $user;
-
-            $this->redirect('/');
+            $this->startSession($user);
         }
+    }
+
+    public function logout()
+    {
+        $this->sessionDestroy();
+    }
+
+    protected function startSession($user)
+    {
+        session_start();
+
+        $_SESSION["loggedin"] = true;
+        $_SESSION["user"] = $user;
+
+        $this->redirect('/');
+    }
+
+    protected function sessionDestroy()
+    {
+        $_SESSION = array();
+        session_destroy();
+
+        $this->redirect('/');
     }
 }

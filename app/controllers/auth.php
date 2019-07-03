@@ -4,6 +4,12 @@
 
 class Auth extends Controller
 {
+    private $auth_controller;
+
+    public function __construct()
+    {
+        $this->auth_controller = new AuthController();
+    }
     /**
      * Redirects to the homepage
      */
@@ -87,7 +93,7 @@ class Auth extends Controller
     {
         try {
 
-            AuthController::login(
+            $this->auth_controller->login(
                 $params['username'],
                 $params['password']
             );
@@ -101,8 +107,6 @@ class Auth extends Controller
 
     public function logout()
     {
-        $_SESSION = array();
-        session_destroy();
-        $this->redirect('/');
+        $this->auth_controller->logout();
     }
 }
