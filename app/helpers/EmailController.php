@@ -2,8 +2,16 @@
 
 class EmailController extends Controller {
 
+    /**
+     * Swift Mailer controller
+     *
+     * @var Class
+     */
     private $mailer;
 
+    /**
+     * Called on the controller creation
+     */
     public function init()
     {
         $transport = new Swift_SmtpTransport(getenv('EMAIL_SMTP'), 25);
@@ -14,6 +22,23 @@ class EmailController extends Controller {
         $this->mailer = new Swift_Mailer($transport);
     }
 
+    /**
+     * Sends an email out
+     *
+     * $email_controller->send(
+     *       array(
+     *          'example@email.com' => 'You can send their name too',
+     *          'youdontneedtothough@email.com'
+     *       ),
+     *       'Subject title as a string',
+     *       $this->twig->render('email/example.html')
+     *  );
+     *
+     *
+     * @param array $recipients_email
+     * @param string $subject
+     * @param string Twig rendered template
+     */
     public function send($recipients_email = [], $subject = '', $template)
     {
         $message = (new Swift_Message($subject))
@@ -24,5 +49,7 @@ class EmailController extends Controller {
 
         // Send the message
         $result = $this->mailer->send($message);
+
+        return $result;
     }
 }
