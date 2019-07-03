@@ -65,8 +65,10 @@ class AuthController extends Controller {
                 [$created_user->email => $created_user->username],
                 'Verify your account',
                 $this->twig->render('email/verify_account.html', [
+                    'name' => $created_user->username,
                     'email' => $created_user->email,
-                    'verification_code' => $verification_code
+                    'verification_code' => $verification_code,
+                    'base_url' => 'http://development/'
                 ])
             );
 
