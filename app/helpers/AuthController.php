@@ -48,7 +48,8 @@ class AuthController extends Controller {
             User::create([
                 'username' => $username,
                 'email' => $email,
-                'password' => $password_hashed
+                'password' => $password_hashed,
+                'email_verified' => false
             ]);
 
             $this->redirect('/');
@@ -75,6 +76,10 @@ class AuthController extends Controller {
         }
 
         if (password_verify($password, $user->password)) {
+            if (!$user->email_verified) {
+                throw new Exception('Email not verified');
+            };
+
             $this->startSession($user);
         }
     }
