@@ -10,6 +10,7 @@ require_once 'core/App.php';
 require_once 'core/Controller.php';
 
 require_once 'helpers/AuthController.php';
+require_once 'helpers/EmailController.php';
 
 require_once 'database.php';
 
