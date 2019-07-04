@@ -1,0 +1,64 @@
+{% extends "admin/partials/dashboard.html" %} {% block content %}
+<h2>Groups</h2>
+<div class="table-responsive">
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Users Count</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if data %} {% for group in data %}
+      <tr>
+        <td>{{ group.id }}</td>
+        <td>{{ group.name }}</td>
+        <td>{{ group.user_group_link_count }}</td>
+        <td>
+          <button type="button" class="btn btn-primary btn-sm float-right">
+            Actions
+          </button>
+        </td>
+      </tr>
+      {% endfor %} {% else %}
+      <tr>
+        <td colspan="3">
+          <div class="alert alert-primary">No Groups Found</div>
+        </td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item {% if current_page <= 1 %} disabled {% endif %}">
+      <a class="page-link" href="{{ prev_page_url }}">Previous</a>
+    </li>
+    {% if (current_page - 1) > 0 %}
+    <li class="page-item">
+      <a class="page-link" href="/admin/groups?page={{ current_page - 1 }}">
+        {{ current_page - 1 }}</a
+      >
+    </li>
+    {% endif %}
+    <li class="page-item active">
+      <a class="page-link" href="#">{{ current_page }}</a>
+    </li>
+    {% if (current_page + 1) <= last_page %}
+    <li class="page-item">
+      <a class="page-link" href="/admin/groups?page={{ current_page + 1 }}">{{
+        current_page + 1
+      }}</a>
+    </li>
+    {% endif %}
+    <li
+      class="page-item {% if current_page == last_page %} disabled {% endif %}"
+    >
+      <a class="page-link" href="{{ next_page_url }}">Next</a>
+    </li>
+  </ul>
+</nav>
+{% endblock %}

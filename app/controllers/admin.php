@@ -27,4 +27,25 @@ class Admin extends Controller
 
         $this->view('admin/users.html', $users);
     }
+
+    /**
+     * Groups page of admin panel
+     */
+    public function groups($params)
+    {
+        if (isset($params['page'])) {
+            $currentPage = $params['page'];
+        } else {
+            $currentPage = 1;
+        }
+
+        $groups = UserGroup::withCount('userGroupLink')
+                    ->paginate(2, ['*'], 'page', $currentPage)
+                    ->withPath('/admin/groups')
+                    ->toArray();
+
+        $groups['current_page'] = $currentPage;
+
+        $this->view('admin/groups.html', $groups);
+    }
 }
