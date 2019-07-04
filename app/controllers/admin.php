@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\Capsule\Manager as DB;
+
 class Admin extends Controller
 {
     /**
@@ -47,5 +49,39 @@ class Admin extends Controller
         $groups['current_page'] = $currentPage;
 
         $this->view('admin/groups.html', $groups);
+    }
+
+
+    /**
+     * Individual group page of admin panel
+     */
+    public function group($params)
+    {
+        if (isset($params['id'])) {
+            $id = $params['id'];
+        } else {
+            $this->redirect('/admin/groups');
+        }
+        if (isset($params['page'])) {
+            $currentPage = $params['page'];
+        } else {
+            $currentPage = 1;
+        }
+
+        $group = UserGroup::find($id)->toArray();
+
+        $users = DB::table('user_group')
+                    ->join('user_group_link', 'user_group.id', '=', 'user_group_link.group_id')
+                    ->join('users', 'users.id', '=', 'user_group_link.user_id')
+                    ->where('user_group.id', '=', $id)
+                    ->select('users.*')
+                    ->paginate(2, ['*'], 'page', $currentPage)
+                    ->withPath('/admin/group?id=' . $id)
+                    ->toArray();
+
+        $this->view('admin/group.html', [
+            'group'=> $group,
+            'users' => $users
+        ]);
     }
 }

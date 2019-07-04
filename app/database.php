@@ -14,5 +14,5 @@ $capsule->addConnection([
     'coolation' => 'urf8_unicode_ci',
     'prefix' => ''
 ]);
-
+$capsule->setAsGlobal();
 $capsule->bootEloquent();
