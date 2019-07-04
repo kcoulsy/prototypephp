@@ -12,8 +12,8 @@
     </thead>
     <tbody>
       {% if data %} {% for group in data %}
-      <tr>
-        <td>{{ group.id }}</td>
+        <tr>
+          <td><a href="/admin/group?id={{ group.id }}">{{ group.id }}</a></td>
         <td>{{ group.name }}</td>
         <td>{{ group.user_group_link_count }}</td>
         <td>
