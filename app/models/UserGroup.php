@@ -2,14 +2,21 @@
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class User extends Eloquent
+class UserGroup extends Eloquent
 {
     /**
      * The database table name.
      *
      * @var string
      */
-    protected $table = 'users';
+    protected $table = 'user_group';
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      * The model fields, it should match those in the table.
@@ -17,19 +24,11 @@ class User extends Eloquent
      * @var array
      */
     protected $fillable = [
-        'username',
-        'email',
-        'password',
-        'email_verified'
+        'name'
     ];
-
-    public function userVerification()
-    {
-        return $this->hasMany('UserVerification', 'user_id');
-    }
 
     public function userGroupLink()
     {
-        return $this->hasMany('UserGroupLink', 'user_id');
+        return $this->hasMany('UserGroupLink', 'group_id');
     }
 }
