@@ -23,7 +23,7 @@ class Admin extends Controller
             $currentPage = 1;
         }
 
-        $users = User::paginate(2, ['*'], 'page', $currentPage)->withPath('/admin/users')->toArray();
+        $users = User::paginate(10, ['*'], 'page', $currentPage)->withPath('/admin/users')->toArray();
 
         $users['current_page'] = $currentPage;
 
@@ -42,7 +42,7 @@ class Admin extends Controller
         }
 
         $groups = UserGroup::withCount('userGroupLink')
-                    ->paginate(2, ['*'], 'page', $currentPage)
+                    ->paginate(10, ['*'], 'page', $currentPage)
                     ->withPath('/admin/groups')
                     ->toArray();
 
@@ -75,7 +75,7 @@ class Admin extends Controller
                     ->join('user', 'user.id', '=', 'user_group_link.user_id')
                     ->where('user_group.id', '=', $id)
                     ->select('user.*')
-                    ->paginate(2, ['*'], 'page', $currentPage)
+                    ->paginate(10, ['*'], 'page', $currentPage)
                     ->withPath('/admin/group?id=' . $id)
                     ->toArray();
 
