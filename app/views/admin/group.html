@@ -45,7 +45,10 @@
     </li>
     {% if (users.current_page - 1) > 0 %}
     <li class="page-item">
-      <a class="page-link" href="/admin/users?page={* users.current_page - 1 *}">
+      <a
+        class="page-link"
+        href="/admin/users?page={* users.current_page - 1 *}"
+      >
         {* users.current_page - 1 *}</a
       >
     </li>
@@ -55,9 +58,9 @@
     </li>
     {% if (users.current_page + 1) <= users.last_page %}
     <li class="page-item">
-      <a class="page-link" href="/admin/users?page={* users.current_page + 1 *}">{*
-        users.current_page + 1
-      *}</a>
+      <a class="page-link" href="/admin/users?page={* users.current_page + 1 *}"
+        >{* users.current_page + 1 *}</a
+      >
     </li>
     {% endif %}
     <li
@@ -72,54 +75,84 @@
 <div class="container">
   <div class="row" id="add-section">
     <div class="col">
-        <h4 class="text-center">Available Roles</h4>
-      <div class="card" >
-        <div id="accordion">
-            <div class="card" v-for="(category, index) in userRoles"  v-if="category.roles.length">
-                <div class="card-header">
-                    <a href="" class="card-link" data-toggle="collapse" v-on:click="userRoles[index].show = !userRoles[index].show">
-                {{category.name}}
-            </a>
-                </div>
-                <div v-bind:id="'#collapse_' + index" class="collapse" v-bind:class="{show: category.show}" data-parent="#accordion">
-                    <ul class="list-group">
-                        <li class="list-group-item" v-for="(role, idx) in category.roles">
-                            <span>{{role.name}}</span>
-                            <button class="btn btn-sm btn-primary float-right align-middle" :data-role="idx" :data-category="index" v-on:click="addRole">
-                      <i class="fas fa-plus"></i>
-                  </button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    </div>
-    <div class="col">
-        <h4 class="text-center">Added Roles</h4>
+      <h4 class="text-center">Available Roles</h4>
       <div class="card">
         <div id="accordion">
-            <div class="card" v-for="(category, index) in addedRoles" v-if="category.roles.length">
-                <div class="card-header">
-                    <a href="" class="card-link" data-toggle="collapse" v-on:click="addedRoles[index].show = !addedRoles[index].show">
-                {{category.name}}
-            </a>
-                </div>
-                <div v-bind:id="'#collapse_' + index" class="collapse" v-bind:class="{show: category.show}" data-parent="#accordion">
-                    <ul class="list-group">
-                        <li class="list-group-item" v-for="(role, idx) in category.roles">
-                            <span>{{role.name}}</span>
-                            <button class="btn btn-sm btn-danger float-right align-middle" :data-role="idx" :data-category="index" v-on:click="removeRole">
-                      <i class="fas fa-minus"></i>
-                  </button>
-                        </li>
-                    </ul>
-                </div>
+          <div
+            class="card"
+            v-for="categoryId in Object.keys(assigned)"
+            v-if="assigned[categoryId].length"
+          >
+            <div class="card-header">
+              <a href="" class="card-link" data-toggle="collapse">
+                {{ categories[categoryId].name }}
+              </a>
             </div>
-
+            <div
+              v-bind:id="'#collapse_' + categoryId"
+              class="collapse show"
+              data-parent="#accordion"
+            >
+              <ul class="list-group">
+                <li
+                  class="list-group-item"
+                  v-for="(role, idx) in assigned[categoryId]"
+                >
+                  <span>{{ role.name }}</span>
+                  <button
+                    class="btn btn-sm btn-primary float-right align-middle"
+                    :data-role="role.id"
+                    :data-category="categoryId"
+                    v-on:click="addRole"
+                  >
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+    <div class="col">
+      <h4 class="text-center">Added Roles</h4>
+      <div class="card">
+        <div id="accordion">
+          <div
+            class="card"
+            v-for="categoryId in Object.keys(non_assigned)"
+            v-if="non_assigned[categoryId].length"
+          >
+            <div class="card-header">
+              <a href="" class="card-link" data-toggle="collapse">
+                {{ categories[categoryId].name }}
+              </a>
+            </div>
+            <div
+              v-bind:id="'#collapse_' + categoryId"
+              class="collapse show"
+              data-parent="#accordion"
+            >
+              <ul class="list-group">
+                <li
+                  class="list-group-item"
+                  v-for="(role, idx) in non_assigned[categoryId]"
+                >
+                  <span>{{ role.name }}</span>
+                  <button
+                    class="btn btn-sm btn-danger float-right align-middle"
+                    :data-role="role.id"
+                    :data-category="categoryId"
+                    v-on:click="removeRole"
+                  >
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -127,77 +160,48 @@
 <!-- End role selector -->
 
 <script>
-new Vue({
+  // console.log({{}})
+  new Vue({
     el: "#add-section",
     data: {
-        userRoles: [
-            {
-                id:"1",
-                name: "Admin",
-                show: true,
-                roles: [
-                    {
-                        name: "Open admin page"
-                    },
-                    {
-                        name: "See users page"
-                    },
-                    {
-                        name: "See groups page"
-                    }
-                ]
-            },
-            {
-                id:"2",
-                name: "Search Bar",
-                show: true,
-                roles: [
-                    {
-                        name: "Search for users"
-                    },
-                    {
-                        name: "Search for groups"
-                    },
-                    {
-                        name: "Search for roles"
-                    }
-                ]
-            }
-        ],
-        addedRoles: [{
-            id: '1',
-            name: 'Admin',
-            show: true,
-            roles: [{
-                name: 'Validate Users',
-                id: 10
-            }]
-        }, {
-            id: '2',
-            name: 'Search Bar',
-            show: false,
-            roles: []
-        }]
+      assigned: [],
+      non_assigned: [],
+      categories: {}
+    },
+    beforeCreate: function() {
+      fetch("http://development/api/roles")
+        .then(res => {
+          return res.json();
+        })
+        .then(data => {
+          console.log(data);
+          this.assigned = data.assigned;
+          this.non_assigned = data.non_assigned;
+          this.categories = data.categories;
+        });
     },
     methods: {
-        addRole: function(ev) {
-            var role = ev.currentTarget.getAttribute('data-role');
-            var category = ev.currentTarget.getAttribute('data-category')
-            var role = this.userRoles[category].roles[role];
-            this.addedRoles[category].roles.push(role);
-            this.addedRoles[category].show = true;
-            this.userRoles[category].roles.splice(role, 1);
-        },
-        removeRole: function(ev) {
-            var role = ev.currentTarget.getAttribute('data-role');
-            var category = ev.currentTarget.getAttribute('data-category')
-            var role = this.addedRoles[category].roles[role];
-            this.userRoles[category].roles.push(role);
-            this.userRoles[category].show = true;
-            this.addedRoles[category].roles.splice(role, 1);
-        }
-    }
-});
+      addRole: function(ev) {
+        var role_id = ev.currentTarget.getAttribute("data-role");
+        var category = ev.currentTarget.getAttribute("data-category");
+        console.log(role_id, category);
 
+        var role = this.non_assigned[category].find((role) => role.id === role_id);
+        console.log(this.non_assigned[category]);
+        // this.addedRoles[category].roles.push(role);
+        // this.addedRoles[category].show = true;
+        // this.userRoles[category].roles.splice(role, 1);
+      },
+      removeRole: function(ev) {
+        var role_id = ev.currentTarget.getAttribute("data-role");
+        var category = ev.currentTarget.getAttribute("data-category");
+        console.log(role_id, category);
+
+        console.log(this.assigned[category]);
+        var role = this.assigned[category].find((role) => role.id === role_id);
+        console.log(role);
+      }
+    }
+  });
 </script>
 {% endblock %}

@@ -36,6 +36,7 @@ class Roles extends Controller
             'categories' => $categories
         ];
 
+        header('Content-type:application/json;charset=utf-8');
         echo json_encode($output);
     }
 }
