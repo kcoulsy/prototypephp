@@ -96,6 +96,10 @@ class App
 
         require_once '../app/controllers/' . $this->controller . '.php';
 
+        // Class name is always the last value, must be unique for now..
+        $con = explode('/', $this->controller);
+        $this->controller = end($con);
+
         $this->controller = new $this->controller;
 
         // checking that the set method exists, if it does then use it
