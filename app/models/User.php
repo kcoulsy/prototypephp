@@ -9,7 +9,7 @@ class User extends Eloquent
      *
      * @var string
      */
-    protected $table = 'users';
+    protected $table = 'user';
 
     /**
      * The model fields, it should match those in the table.

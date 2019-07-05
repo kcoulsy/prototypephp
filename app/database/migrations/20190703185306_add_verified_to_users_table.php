@@ -31,7 +31,7 @@ class AddVerifiedToUsersTable extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('users')
+        $table = $this->table('user')
             ->addColumn('email_verified', 'boolean')
             ->update();
 

@@ -72,9 +72,9 @@ class Admin extends Controller
 
         $users = DB::table('user_group')
                     ->join('user_group_link', 'user_group.id', '=', 'user_group_link.group_id')
-                    ->join('users', 'users.id', '=', 'user_group_link.user_id')
+                    ->join('user', 'user.id', '=', 'user_group_link.user_id')
                     ->where('user_group.id', '=', $id)
-                    ->select('users.*')
+                    ->select('user.*')
                     ->paginate(2, ['*'], 'page', $currentPage)
                     ->withPath('/admin/group?id=' . $id)
                     ->toArray();
