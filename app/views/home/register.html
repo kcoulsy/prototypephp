@@ -1,4 +1,4 @@
-{{ include("partials/head.html") }}
+{* include("partials/head.html") *}
 
 <body id="login" class="text-center">
   <form class="form-signin" action="/auth/register" method="POST">
@@ -53,7 +53,7 @@
     <div class="checkbox mb-3">
       <label> <input type="checkbox" value="remember-me" /> Remember me </label>
     </div>
-    <p>{{ error }}</p>
+    <p>{* error *}</p>
     <button class="btn btn-lg btn-primary btn-block" type="submit">
       Sign in
     </button>

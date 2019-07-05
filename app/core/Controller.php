@@ -17,6 +17,13 @@ class Controller
     protected $twig;
 
     /**
+     * Twig lexer.
+     *
+     * @var Object
+     */
+    protected $lexer;
+
+    /**
      * Controller constructor
      */
     public function __construct()
@@ -27,6 +34,15 @@ class Controller
 
         $this->loader = new Twig_Loader_Filesystem('../app/views');
         $this->twig = new Twig_Environment($this->loader);
+
+        $this->lexer = new Twig_Lexer($this->twig, [
+            'tag_comment'   => ['{#', '#}'],
+            'tag_block'     => ['{%', '%}'],
+            'tag_variable'  => ['{*', '*}'],
+            'interpolation' => ['#{', '}'],
+        ]);
+
+        $this->twig->setLexer($this->lexer);
 
         if (method_exists($this, 'init')) {
             call_user_func([$this, 'init']);
