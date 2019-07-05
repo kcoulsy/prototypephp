@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class CreateRoleCategoryLinkTable extends AbstractMigration
+class CreateGroupRolesTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -31,8 +31,8 @@ class CreateRoleCategoryLinkTable extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('role_category_link');
-        $table->addColumn('category_id', 'integer', ['limit' => 11])
+        $table = $this->table('group_roles');
+        $table->addColumn('group_id', 'integer', ['limit' => 11])
                 ->addColumn('role_id', 'integer', ['limit' => 11])
                 ->create();
     }

@@ -19,42 +19,50 @@ class AddInitialRoles extends AbstractSeed
             [
                 'id' => 10001,
                 'alias' => 'admin.access',
-                'name' => 'Open Admin Panel'
+                'name' => 'Open Admin Panel',
+                'role_category_id' => 20001
             ],
             [
                 'id' => 10002,
                 'alias' => 'admin.users.access',
-                'name' => 'Access User Management'
+                'name' => 'Access User Management',
+                'role_category_id' => 20001
             ],
             [
                 'id' => 10003,
                 'alias' => 'admin.users.manage',
-                'name' => 'Manage Users'
+                'name' => 'Manage Users',
+                'role_category_id' => 20001
             ],
             [
                 'id' => 10004,
                 'alias' => 'admin.group.access',
-                'name' => 'Access Group Management'
+                'name' => 'Access Group Management',
+                'role_category_id' => 20001
             ],
             [
                 'id' => 10005,
                 'alias' => 'admin.group.manage',
-                'name' => 'Manage Groups'
+                'name' => 'Manage Groups',
+                'role_category_id' => 20001
             ],
             [
                 'id' => 10006,
                 'alias' => 'admin.roles.access',
-                'name' => 'Access Roles'
+                'name' => 'Access Roles',
+                'role_category_id' => 20001
             ],
             [
                 'id' => 10007,
                 'alias' => 'admin.group.manage.roles',
-                'name' => 'Modify Group Roles'
+                'name' => 'Modify Group Roles',
+                'role_category_id' => 20001
             ],
             [
                 'id' => 10008,
                 'alias' => 'profile.self.access',
-                'name' => 'See Own Profile'
+                'name' => 'See Own Profile',
+                'role_category_id' => 20002
             ]
         ];
 
