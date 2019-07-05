@@ -4,7 +4,8 @@ require_once 'init.php';
 
 return  [
     'paths' => [
-        'migrations' => 'database/migrations'
+        'migrations' => 'database/migrations',
+        'seeds' => 'database/seeds'
     ],
     'environments' => [
         'default_migration_table' => 'migrations',
