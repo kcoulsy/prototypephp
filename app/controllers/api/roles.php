@@ -54,13 +54,13 @@ class Roles extends Controller
     public function update($params)
     {
         if (isset($params['group_id'])) {
-            $group_id = $params['group_id'];
+            $group_id = (int)$params['group_id'];
         } else {
             throw new Exception('Param group_id not defined');
         }
 
         if (isset($params['role_id'])) {
-            $role_id = $params['role_id'];
+            $role_id = (int)$params['role_id'];
         } else {
             throw new Exception('Param role_id not defined');
         }
@@ -71,6 +71,22 @@ class Roles extends Controller
             throw new Exception('Param enabled not defined');
         }
 
+        $role = GroupRoles::where('role_id', '=', $role_id)->where('group_id', '=', $group_id);
+
+        if ($role->get()->count() > 0) {
+            // already has the role
+            if ($enabled == 'false') {
+                $role->first()->delete();
+            }
+        } else {
+            // no roles yet
+            if ($enabled == 'true') {
+                $new_role = GroupRoles::create([
+                    'role_id' => $role_id,
+                    'group_id' => $group_id
+                ]);
+            }
+        }
         echo json_encode($params);
     }
 }

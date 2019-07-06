@@ -195,8 +195,8 @@
 
         // creating post request form data
         var form = new FormData();
-        form.append("group_id", "{* group.id *}");
-        form.append("role_id", role_id);
+        form.append("group_id", parseInt("{* group.id *}"));
+        form.append("role_id", parseInt(role_id));
         form.append("enabled", new_type === "assigned");
 
         fetch("http://development/api/roles/update", {
