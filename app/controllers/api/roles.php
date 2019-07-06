@@ -9,7 +9,11 @@ class Roles extends Controller
      */
     public function index($params)
     {
-        $group_id = 40001;
+        if (isset($params['group_id'])) {
+            $group_id = $params['group_id'];
+        } else {
+            throw new Exception('Param group_id not defined');
+        }
 
         $categories = RoleCategory::get()
                         ->keyBy('id')

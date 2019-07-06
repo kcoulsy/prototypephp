@@ -168,7 +168,7 @@
       categories: {}
     },
     beforeCreate: function() {
-      fetch("http://development/api/roles")
+      fetch("http://development/api/roles?group_id={* group.id *}")
         .then(res => {
           return res.json();
         })
