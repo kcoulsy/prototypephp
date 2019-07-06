@@ -231,7 +231,7 @@ class AuthController extends Controller {
                             $join->on('user_group_link.group_id', '=','group_roles.group_id')
                                 ->where('user_group_link.user_id', '=', $user->id);
                         })
-                        ->where('role.alias', '=', $roles)
+                        ->whereIn('alias', $roles)
                         ->pluck('alias')
                         ->toArray();
 
