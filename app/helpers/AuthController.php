@@ -209,4 +209,42 @@ class AuthController extends Controller {
 
         return $user_roles->count() > 0;
     }
+
+    /**
+     * Checks whether the logged in user for the array or roles passes, returning each as a bool
+     *
+     * @param array $roles
+     *
+     * @return array $has_roles
+     */
+    public function hasRoles($roles)
+    {
+        if (!$_SESSION["loggedin"] || !isset($_SESSION['user'])) {
+            return false;
+        }
+
+        $user = $_SESSION['user'];
+
+        $user_roles = DB::table('role')
+                        ->join('group_roles', 'role.id', '=', 'group_roles.role_id')
+                        ->join('user_group_link', function($join) use ($user) {
+                            $join->on('user_group_link.group_id', '=','group_roles.group_id')
+                                ->where('user_group_link.user_id', '=', $user->id);
+                        })
+                        ->where('role.alias', '=', $roles)
+                        ->pluck('alias')
+                        ->toArray();
+
+        $has_roles = [];
+
+        foreach($roles as $role) {
+            $has_roles[$role] = false;
+        }
+
+        foreach($user_roles as $role) {
+            $has_roles[$role] = true;
+        }
+
+        return $has_roles;
+    }
 }

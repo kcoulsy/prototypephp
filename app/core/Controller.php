@@ -64,7 +64,10 @@ class Controller
             $data['route_url'] = '/' . $_GET['url'];
         }
 
-        $data['has_about'] = AuthController::hasRole('pages.access.about');
+        $data['nav_roles'] = AuthController::hasRoles([
+            'pages.access.about',
+            'pages.access.news'
+        ]);
 
         echo $this->twig->render($view, $data);
     }
