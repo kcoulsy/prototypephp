@@ -65,6 +65,7 @@ class Controller
         }
 
         $data['nav_roles'] = AuthController::hasRoles([
+            'admin.access',
             'pages.access.about',
             'pages.access.news'
         ]);

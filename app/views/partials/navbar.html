@@ -26,6 +26,11 @@
               <a class="nav-link" href="/about">About</a>
             </li>
           {% endif %}
+          {% if nav_roles['admin.access'] %}
+            <li class="nav-item">
+              <a class="nav-link" href="/admin">Admin</a>
+            </li>
+          {% endif %}
         </ul>
         <ul class="navbar-nav my-2 my-md-0">
           {% if user_logged_in %}
