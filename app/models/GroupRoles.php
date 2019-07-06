@@ -2,14 +2,14 @@
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class RoleCategoryLink extends Eloquent
+class GroupRoles extends Eloquent
 {
     /**
      * The database table name.
      *
      * @var string
      */
-    protected $table = 'role_category_link';
+    protected $table = 'group_roles';
 
     /**
      * Indicates if the model should be timestamped.
@@ -25,16 +25,6 @@ class RoleCategoryLink extends Eloquent
      */
     protected $fillable = [
         'role_id',
-        'category_id'
+        'group_id'
     ];
-
-    public function roleCategory()
-    {
-        return $this->belongsTo('RoleCategory', 'id');
-    }
-
-    public function role()
-    {
-        return $this->belongsTo('Role');
-    }
 }
