@@ -90,7 +90,7 @@
             </div>
             <div
               v-bind:id="'#collapse_' + categoryId"
-              class="collapse"
+              class="collapse show"
               data-parent="#accordion"
             >
               <ul class="list-group">
@@ -173,28 +173,20 @@
           return res.json();
         })
         .then(data => {
-          console.log(data);
           this.assigned = data.assigned;
           this.non_assigned = data.non_assigned;
           this.categories = data.categories;
         });
     },
-    computed: {
-        categoryData: function() {
-            console.log(this.categories);
-            return this.categories;
-        }
-    },
     methods: {
         toggleAccordion: function(ev) {
             var id = ev.currentTarget.getAttribute("data-category");
-            console.log(id);
+
             if (typeof this.categories[id].show === 'undefined') {
                 this.categories[id].show = false;
             } else {
                 this.categories[id].show = !this.categories[id].show;
             }
-            console.log( this.categories[id])
         },
         addRole: function(ev) {
             this.modifyRole(ev, "non_assigned", "assigned");
