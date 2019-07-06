@@ -21,9 +21,11 @@
               >Home <span class="sr-only">(current)</span></a
             >
           </li>
+          {% if has_about %}
           <li class="nav-item">
             <a class="nav-link" href="/about">About</a>
           </li>
+          {% endif %}
           <li class="nav-item">
             <a class="nav-link disabled" href="/users">Users</a>
           </li>
