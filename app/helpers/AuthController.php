@@ -162,6 +162,10 @@ class AuthController extends Controller {
      */
     public function isLoggedIn()
     {
+        if (session_status() == PHP_SESSION_NONE) {
+            return false;
+        }
+
         if (isset($_SESSION["loggedin"])) {
             return $_SESSION['loggedin'];
         }
@@ -176,7 +180,12 @@ class AuthController extends Controller {
      */
     public function getUser()
     {
-        if (!$_SESSION["loggedin"] || !isset($_SESSION['user'])) {
+        if (
+            session_status() == PHP_SESSION_NONE
+            || !isset($_SESSION['loggedin'])
+            || !$_SESSION["loggedin"]
+            || !isset($_SESSION['user'])
+        ) {
             return null;
         }
 
@@ -192,7 +201,12 @@ class AuthController extends Controller {
      */
     public function hasRole($role)
     {
-        if (!$_SESSION["loggedin"] || !isset($_SESSION['user'])) {
+        if (
+            session_status() == PHP_SESSION_NONE
+            || !isset($_SESSION['loggedin'])
+            || !$_SESSION["loggedin"]
+            || !isset($_SESSION['user'])
+        ) {
             return false;
         }
 
@@ -219,7 +233,12 @@ class AuthController extends Controller {
      */
     public function hasRoles($roles)
     {
-        if (!$_SESSION["loggedin"] || !isset($_SESSION['user'])) {
+        if (
+            session_status() == PHP_SESSION_NONE
+            || !isset($_SESSION['loggedin'])
+            || !$_SESSION["loggedin"]
+            || !isset($_SESSION['user'])
+        ) {
             return false;
         }
 
