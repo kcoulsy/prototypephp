@@ -23,6 +23,14 @@ class Admin extends Controller
     }
 
     /**
+     * Default homepage for the admin page
+     */
+    public function profile()
+    {
+        $this->view('admin/profile.html');
+    }
+
+    /**
      * Users page of admin panel
      */
     public function users($params)

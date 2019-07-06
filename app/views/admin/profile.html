@@ -1,0 +1,60 @@
+{% extends "admin/partials/dashboard.html" %} {% block content %}
+
+<h1 class="h2">User Profile</h1>
+<div class="row">
+    <div class="col-sm-3">
+        <!--left col-->
+        <div class="text-center">
+            <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+            <h6>Upload a different photo...</h6>
+            <input type="file" class="text-center center-block file-upload">
+        </div>
+        </hr><br>
+        <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">Creation Date</h6>
+                    <small class="text-muted">date</small>
+                </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">Last Updated</h6>
+                    <small class="text-muted">Brief description</small>
+                </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">Last Login Location</h6>
+                    <small class="text-muted">Location/ip</small>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+    <!-- left /col-3-->
+    <div class="col-sm-9">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="groups-tab" data-toggle="tab" href="#groups" role="tab" aria-controls="groups" aria-selected="false">Groups</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    {% include('admin/partials/edit_profile.html') %}
+                </div>
+                <div class="tab-pane fade" id="groups" role="tabpanel" aria-labelledby="groups-tab">
+                    otherstuff
+                </div>
+            </div>
+            <!--/tab-content-->
+        </div>
+        <!--right /col-9-->
+    </div>
+    <!--/row-->
+</div>
+{% endblock %}
