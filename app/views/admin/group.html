@@ -83,14 +83,14 @@
             v-for="categoryId in Object.keys(non_assigned)"
             v-if="non_assigned[categoryId].length"
           >
-            <div class="card-header">
-              <a href="" class="card-link" data-toggle="collapse">
+            <div class="card-header" :data-category="categoryId" style="cursor: pointer;">
+              <a >
                 {{ categories[categoryId].name }}
               </a>
             </div>
             <div
               v-bind:id="'#collapse_' + categoryId"
-              class="collapse show"
+              class="collapse"
               data-parent="#accordion"
             >
               <ul class="list-group">
@@ -123,10 +123,8 @@
             v-for="categoryId in Object.keys(assigned)"
             v-if="assigned[categoryId].length"
           >
-            <div class="card-header">
-              <a href="" class="card-link" data-toggle="collapse">
-                {{ categories[categoryId].name }}
-              </a>
+            <div class="card-header" :data-category="categoryId" style="cursor: pointer;">
+              {{ categories[categoryId].name }}
             </div>
             <div
               v-bind:id="'#collapse_' + categoryId"
@@ -162,10 +160,12 @@
 <script>
   new Vue({
     el: "#add-section",
-    data: {
-      assigned: [],
-      non_assigned: [],
-      categories: {}
+    data: function() {
+        return {
+            assigned: [],
+            non_assigned: [],
+            categories: {}
+        }
     },
     beforeCreate: function() {
       fetch("http://development/api/roles?group_id={* group.id *}")
@@ -179,46 +179,62 @@
           this.categories = data.categories;
         });
     },
+    computed: {
+        categoryData: function() {
+            console.log(this.categories);
+            return this.categories;
+        }
+    },
     methods: {
-      addRole: function(ev) {
-        this.modifyRole(ev, "non_assigned", "assigned");
-      },
-      removeRole: function(ev) {
-        this.modifyRole(ev, "assigned", "non_assigned");
-      },
-      modifyRole: function(ev, current_type, new_type) {
-        var role_id = parseInt(ev.currentTarget.getAttribute("data-role"));
-        var category = parseInt(ev.currentTarget.getAttribute("data-category"));
-        var role = this[current_type][category].find(
-          role => role.id === role_id
-        );
-
-        // creating post request form data
-        var form = new FormData();
-        form.append("group_id", parseInt("{* group.id *}"));
-        form.append("role_id", parseInt(role_id));
-        form.append("enabled", new_type === "assigned");
-
-        fetch("http://development/api/roles/update", {
-          method: "POST",
-          body: form
-        })
-          .then(res => res.json())
-          .then(data => {
-            // removing from non assigned list
-            this[current_type][category] = this[current_type][category].filter(
-              role => {
-                return role.id !== role_id;
-              }
-            );
-            // checking an array exists for the category then adding
-            if (!this[new_type][role.role_category_id]) {
-              this[new_type][role.role_category_id] = [];
+        toggleAccordion: function(ev) {
+            var id = ev.currentTarget.getAttribute("data-category");
+            console.log(id);
+            if (typeof this.categories[id].show === 'undefined') {
+                this.categories[id].show = false;
+            } else {
+                this.categories[id].show = !this.categories[id].show;
             }
-            this[new_type][role.role_category_id].push(role);
-          });
-      }
+            console.log( this.categories[id])
+        },
+        addRole: function(ev) {
+            this.modifyRole(ev, "non_assigned", "assigned");
+        },
+        removeRole: function(ev) {
+            this.modifyRole(ev, "assigned", "non_assigned");
+        },
+        modifyRole: function(ev, current_type, new_type) {
+            var role_id = parseInt(ev.currentTarget.getAttribute("data-role"));
+            var category = parseInt(ev.currentTarget.getAttribute("data-category"));
+            var role = this[current_type][category].find(
+                role => role.id === role_id
+            );
+
+            // creating post request form data
+            var form = new FormData();
+            form.append("group_id", parseInt("{* group.id *}"));
+            form.append("role_id", parseInt(role_id));
+            form.append("enabled", new_type === "assigned");
+
+            fetch("http://development/api/roles/update", {
+                method: "POST",
+                    body: form
+                })
+            .then(res => res.json())
+            .then(data => {
+                // removing from non assigned list
+                this[current_type][category] = this[current_type][category].filter(
+                    role => {
+                        return role.id !== role_id;
+                    }
+                );
+                // checking an array exists for the category then adding
+                if (!this[new_type][role.role_category_id]) {
+                    this[new_type][role.role_category_id] = [];
+                }
+                this[new_type][role.role_category_id].push(role);
+            });
+        }
     }
-  });
+});
 </script>
 {% endblock %}
