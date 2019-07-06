@@ -80,8 +80,8 @@
         <div id="accordion">
           <div
             class="card"
-            v-for="categoryId in Object.keys(assigned)"
-            v-if="assigned[categoryId].length"
+            v-for="categoryId in Object.keys(non_assigned)"
+            v-if="non_assigned[categoryId].length"
           >
             <div class="card-header">
               <a href="" class="card-link" data-toggle="collapse">
@@ -96,7 +96,7 @@
               <ul class="list-group">
                 <li
                   class="list-group-item"
-                  v-for="(role, idx) in assigned[categoryId]"
+                  v-for="(role, idx) in non_assigned[categoryId]"
                 >
                   <span>{{ role.name }}</span>
                   <button
@@ -120,8 +120,8 @@
         <div id="accordion">
           <div
             class="card"
-            v-for="categoryId in Object.keys(non_assigned)"
-            v-if="non_assigned[categoryId].length"
+            v-for="categoryId in Object.keys(assigned)"
+            v-if="assigned[categoryId].length"
           >
             <div class="card-header">
               <a href="" class="card-link" data-toggle="collapse">
@@ -136,7 +136,7 @@
               <ul class="list-group">
                 <li
                   class="list-group-item"
-                  v-for="(role, idx) in non_assigned[categoryId]"
+                  v-for="(role, idx) in assigned[categoryId]"
                 >
                   <span>{{ role.name }}</span>
                   <button
@@ -181,24 +181,29 @@
     },
     methods: {
       addRole: function(ev) {
-        var role_id = ev.currentTarget.getAttribute("data-role");
-        var category = ev.currentTarget.getAttribute("data-category");
-        console.log(role_id, category);
-
-        var role = this.non_assigned[category].find((role) => role.id === role_id);
-        console.log(this.non_assigned[category]);
-        // this.addedRoles[category].roles.push(role);
-        // this.addedRoles[category].show = true;
-        // this.userRoles[category].roles.splice(role, 1);
+        this.modifyRole(ev, "non_assigned", "assigned");
       },
       removeRole: function(ev) {
-        var role_id = ev.currentTarget.getAttribute("data-role");
-        var category = ev.currentTarget.getAttribute("data-category");
-        console.log(role_id, category);
+        this.modifyRole(ev, "assigned", "non_assigned");
+      },
+      modifyRole: function(ev, current_type, new_type) {
+        var role_id = parseInt(ev.currentTarget.getAttribute("data-role"));
+        var category = parseInt(ev.currentTarget.getAttribute("data-category"));
+        var role = this[current_type][category].find(
+          role => role.id === role_id
+        );
 
-        console.log(this.assigned[category]);
-        var role = this.assigned[category].find((role) => role.id === role_id);
-        console.log(role);
+        // removing from non assigned list
+        this[current_type][category] = this[current_type][category].filter(
+          role => {
+            return role.id !== role_id;
+          }
+        );
+        // checking an array exists for the category then adding
+        if (!this[new_type][role.role_category_id]) {
+          this[new_type][role.role_category_id] = [];
+        }
+        this[new_type][role.role_category_id].push(role);
       }
     }
   });
