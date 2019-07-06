@@ -47,4 +47,30 @@ class Roles extends Controller
         header('Content-type:application/json;charset=utf-8');
         echo json_encode($output);
     }
+
+    /**
+     * Update a role for a group
+     */
+    public function update($params)
+    {
+        if (isset($params['group_id'])) {
+            $group_id = $params['group_id'];
+        } else {
+            throw new Exception('Param group_id not defined');
+        }
+
+        if (isset($params['role_id'])) {
+            $role_id = $params['role_id'];
+        } else {
+            throw new Exception('Param role_id not defined');
+        }
+
+        if (isset($params['enabled'])) {
+            $enabled = $params['enabled'];
+        } else {
+            throw new Exception('Param enabled not defined');
+        }
+
+        echo json_encode($params);
+    }
 }

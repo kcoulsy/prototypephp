@@ -118,6 +118,8 @@ class App
             $this->params = $req;
         }
 
+        $this->params['type'] = $this->type;
+
         $this->callMethod();
     }
 

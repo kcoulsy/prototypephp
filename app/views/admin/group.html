@@ -193,17 +193,30 @@
           role => role.id === role_id
         );
 
-        // removing from non assigned list
-        this[current_type][category] = this[current_type][category].filter(
-          role => {
-            return role.id !== role_id;
-          }
-        );
-        // checking an array exists for the category then adding
-        if (!this[new_type][role.role_category_id]) {
-          this[new_type][role.role_category_id] = [];
-        }
-        this[new_type][role.role_category_id].push(role);
+        // creating post request form data
+        var form = new FormData();
+        form.append("group_id", "{* group.id *}");
+        form.append("role_id", role_id);
+        form.append("enabled", new_type === "assigned");
+
+        fetch("http://development/api/roles/update", {
+          method: "POST",
+          body: form
+        })
+          .then(res => res.json())
+          .then(data => {
+            // removing from non assigned list
+            this[current_type][category] = this[current_type][category].filter(
+              role => {
+                return role.id !== role_id;
+              }
+            );
+            // checking an array exists for the category then adding
+            if (!this[new_type][role.role_category_id]) {
+              this[new_type][role.role_category_id] = [];
+            }
+            this[new_type][role.role_category_id].push(role);
+          });
       }
     }
   });
