@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\Capsule\Manager as DB;
+
 class AuthController extends Controller {
 
     public function register($params)
@@ -151,5 +153,60 @@ class AuthController extends Controller {
         session_destroy();
 
         $this->redirect('/');
+    }
+
+    /**
+     * Checks if logged in
+     *
+     * @return bool $logged_in;
+     */
+    public function isLoggedIn()
+    {
+        if (isset($_SESSION["loggedin"])) {
+            return $_SESSION['loggedin'];
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if logged in and returns the logged in user
+     *
+     * @return Model $user;
+     */
+    public function getUser()
+    {
+        if (!$_SESSION["loggedin"] || !isset($_SESSION['user'])) {
+            return null;
+        }
+
+        return $_SESSION['user'];
+    }
+
+    /**
+     * Checks whether the logged in user has the passed in role
+     *
+     * @param string $role
+     *
+     * @return bool $has_role
+     */
+    public function hasRole($role)
+    {
+        if (!$_SESSION["loggedin"] || !isset($_SESSION['user'])) {
+            return false;
+        }
+
+        $user = $_SESSION['user'];
+
+        $user_roles = DB::table('role')
+                        ->join('group_roles', 'role.id', '=', 'group_roles.role_id')
+                        ->join('user_group_link', function($join) use ($user) {
+                            $join->on('user_group_link.group_id', '=','group_roles.group_id')
+                                ->where('user_group_link.user_id', '=', $user->id);
+                        })
+                        ->where('role.alias', '=', $role)
+                        ->get();
+
+        return $user_roles->count() > 0;
     }
 }

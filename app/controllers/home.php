@@ -3,6 +3,13 @@
 class Home extends Controller
 {
     /**
+     * Required roles for specific routes
+     */
+    public $protected_roles = [
+        'about' => 'admin.roles.access'
+    ];
+
+    /**
      * Default homepage for the site.
      *
      * @param string $name The name displayed on the hero banner.

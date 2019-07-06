@@ -7,28 +7,28 @@ class App
      *
      * @var string
      */
-    protected $controller = 'home';
+    private $controller = 'home';
 
     /**
      * The selected method name.
      *
      * @var string
      */
-    protected $method = 'index';
+    private $method = 'index';
 
     /**
      * The selected params.
      *
      * @var array
      */
-    protected $params = [];
+    private $params = [];
 
     /**
      * The request method type.
      *
      * @var string
      */
-    protected $type = 'GET';
+    private $type = 'GET';
 
     /**
      * App Constuctor.
@@ -43,7 +43,7 @@ class App
      *
      * @return array request
      */
-    public function parseRequest()
+    private function parseRequest()
     {
         if (isset($_GET['url'])) {
             $params = $_GET;
@@ -57,7 +57,7 @@ class App
     /**
      * Updates the selected controller, method, params and type.
      */
-    public function updateMethod()
+    private function updateMethod()
     {
         $req = $this->parseRequest();
         $method = $this->method;
@@ -137,10 +137,43 @@ class App
     }
 
     /**
-     * Calls the controller and method for the selected values.
+     * Checks for access then either
+     *  Calls the controller and method for the selected values.
+     *  or redirects to the home page and dies
      */
-    public function callMethod()
+    private function callMethod()
     {
-        call_user_func([$this->controller, $this->method], $this->params);
+        if ($this->hasAccess()) {
+            call_user_func([$this->controller, $this->method], $this->params);
+        } else {
+            header('Location: /');
+            die();
+        }
+    }
+
+    /**
+     * Checks whether the route is protected and whether has the required role.
+     */
+    private function hasAccess()
+    {
+        if (isset($this->controller->protected_roles)) {
+            $protected_roles = $this->controller->protected_roles;
+
+            if (isset($protected_roles[$this->method])) {
+                $required_role = $protected_roles[$this->method];
+                $auth_controller = new AuthController();
+
+                if (!$auth_controller->isLoggedIn()) {
+                    return false;
+                }
+
+                return $auth_controller->hasRole($required_role);
+            }
+
+            // method not in protected roles so has access
+            return true;
+        };
+        // controller has no protected roles so has access
+        return true;
     }
 }
