@@ -5,6 +5,16 @@ use Illuminate\Database\Capsule\Manager as DB;
 class Admin extends Controller
 {
     /**
+     * Required roles for specific routes
+     */
+    public $protected_roles = [
+        'index' => 'admin.access',
+        'users' => 'admin.access.users',
+        'groups' => 'admin.access.groups',
+        'group' => 'admin.access.group'
+    ];
+
+    /**
      * Default homepage for the admin page
      */
     public function index()

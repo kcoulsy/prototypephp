@@ -53,6 +53,27 @@ class AddInitialRoles extends AbstractSeed
             'available_to' => ['Admin']
         ],[
             'id' => abs( crc32( uniqid() ) ),
+            'alias' => 'admin.access.users',
+            'name' => 'See users page of admin panel',
+            'role_category_id' => $admin_category_id,
+            'hidden' => false,
+            'available_to' => ['Admin']
+        ],[
+            'id' => abs( crc32( uniqid() ) ),
+            'alias' => 'admin.access.groups',
+            'name' => 'See groups page of admin panel',
+            'role_category_id' => $admin_category_id,
+            'hidden' => false,
+            'available_to' => ['Admin']
+        ],[
+            'id' => abs( crc32( uniqid() ) ),
+            'alias' => 'admin.access.group',
+            'name' => 'See individual group page of admin panel',
+            'role_category_id' => $admin_category_id,
+            'hidden' => false,
+            'available_to' => ['Admin']
+        ],[
+            'id' => abs( crc32( uniqid() ) ),
             'alias' => 'pages.access.about',
             'name' => 'See about page',
             'role_category_id' => $pages_category_id,
@@ -80,21 +101,18 @@ class AddInitialRoles extends AbstractSeed
 
             }
         }
-        var_dump($group_roles);
-        // die();
-        // die();
+
         $group_roles_table = $this->table('group_roles');
-        // var_dump($group_roles_table);
-        $group_roles_table->insert($group_roles)
-                ->save();
+        $group_roles_table->truncate();
+        $group_roles_table->insert($group_roles)->save();
 
         $role_table = $this->table('role');
-        $role_table->insert($roles)
-                ->save();
+        $role_table->truncate();
+        $role_table->insert($roles)->save();
 
         $role_category_table = $this->table('role_category');
-        $role_category_table->insert($role_categories)
-                ->save();
+        $role_category_table->truncate();
+        $role_category_table->insert($role_categories)->save();
 
     }
 }
