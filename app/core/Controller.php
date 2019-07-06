@@ -58,7 +58,6 @@ class Controller
     public function view($view, $data = [])
     {
         $data['user_logged_in'] = $this->isAuthed();
-
         $route_url = null;
 
         if (isset($_GET['url'])) {
@@ -75,7 +74,7 @@ class Controller
      */
     public function isAuthed()
     {
-        return isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true;
+        return AuthController::isLoggedIn();
     }
 
     /**
@@ -85,11 +84,7 @@ class Controller
      */
     public function getUser()
     {
-        if (!$this->isAuthed()) {
-            return null;
-        }
-
-        return $_SESSION['user'];
+        return AuthController::getUser();
     }
 
     /**
