@@ -5,6 +5,14 @@ use Illuminate\Database\Capsule\Manager as DB;
 class Roles extends Controller
 {
     /**
+     * Required roles for specific routes
+     */
+    public $protected_roles = [
+        'index' => 'admin.roles.access',
+        'update' => 'admin.roles.update'
+    ];
+
+    /**
      * Default
      */
     public function index($params)
@@ -25,6 +33,7 @@ class Roles extends Controller
                                 ->where('group_roles.group_id', '=', $group_id);
                     })
                     ->select('role.*', 'group_roles.group_id', 'group_roles.role_id')
+                    ->where('role.hidden', 'not', true)
                     ->get();
 
         $non_assigned = [];

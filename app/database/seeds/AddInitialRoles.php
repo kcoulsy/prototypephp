@@ -53,7 +53,7 @@ class AddInitialRoles extends AbstractSeed
             'available_to' => ['Admin']
         ],[
             'id' => abs( crc32( uniqid() ) ),
-            'alias' => 'admin.roles.update',
+            'alias' => 'pages.access.about',
             'name' => 'See about page',
             'role_category_id' => $pages_category_id,
             'hidden' => false,

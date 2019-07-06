@@ -6,7 +6,7 @@ class Home extends Controller
      * Required roles for specific routes
      */
     public $protected_roles = [
-        'about' => 'admin.roles.access'
+        'about' => 'pages.access.about'
     ];
 
     /**
