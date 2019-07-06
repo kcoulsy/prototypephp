@@ -2,6 +2,7 @@
 
 
 use Phinx\Seed\AbstractSeed;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class AddInitialRoles extends AbstractSeed
 {
@@ -15,59 +16,85 @@ class AddInitialRoles extends AbstractSeed
      */
     public function run()
     {
-        $data = [
-            [
-                'id' => 10001,
-                'alias' => 'admin.access',
-                'name' => 'Open Admin Panel',
-                'role_category_id' => 20001
-            ],
-            [
-                'id' => 10002,
-                'alias' => 'admin.users.access',
-                'name' => 'Access User Management',
-                'role_category_id' => 20001
-            ],
-            [
-                'id' => 10003,
-                'alias' => 'admin.users.manage',
-                'name' => 'Manage Users',
-                'role_category_id' => 20001
-            ],
-            [
-                'id' => 10004,
-                'alias' => 'admin.group.access',
-                'name' => 'Access Group Management',
-                'role_category_id' => 20001
-            ],
-            [
-                'id' => 10005,
-                'alias' => 'admin.group.manage',
-                'name' => 'Manage Groups',
-                'role_category_id' => 20001
-            ],
-            [
-                'id' => 10006,
-                'alias' => 'admin.roles.access',
-                'name' => 'Access Roles',
-                'role_category_id' => 20001
-            ],
-            [
-                'id' => 10007,
-                'alias' => 'admin.group.manage.roles',
-                'name' => 'Modify Group Roles',
-                'role_category_id' => 20001
-            ],
-            [
-                'id' => 10008,
-                'alias' => 'profile.self.access',
-                'name' => 'See Own Profile',
-                'role_category_id' => 20002
-            ]
-        ];
 
-        $table = $this->table('role');
-        $table->insert($data)
+        $groups = DB::table('user_group')->get()->keyBy('name')->toArray();
+
+        $admin_category_id = abs( crc32( uniqid() ) );
+        $pages_category_id = abs( crc32( uniqid() ) );
+
+        $role_categories = [[
+            'id' => $admin_category_id,
+            'name' => 'Admin Panel'
+        ],[
+            'id' => $pages_category_id,
+            'name' => 'Pages'
+        ]];
+
+        $roles = [[
+            'id' => abs( crc32( uniqid() ) ),
+            'alias' => 'admin.access',
+            'name' => 'Open Admin Panel',
+            'role_category_id' => $admin_category_id,
+            'hidden' => false,
+            'available_to' => ['Admin']
+        ],[
+            'id' => abs( crc32( uniqid() ) ),
+            'alias' => 'admin.roles.access',
+            'name' => 'See roles',
+            'role_category_id' => $admin_category_id,
+            'hidden' => true,
+            'available_to' => ['Admin']
+        ],[
+            'id' => abs( crc32( uniqid() ) ),
+            'alias' => 'admin.roles.update',
+            'name' => 'Update roles',
+            'role_category_id' => $admin_category_id,
+            'hidden' => true,
+            'available_to' => ['Admin']
+        ],[
+            'id' => abs( crc32( uniqid() ) ),
+            'alias' => 'admin.roles.update',
+            'name' => 'See about page',
+            'role_category_id' => $pages_category_id,
+            'hidden' => false,
+            'available_to' => ['Admin', 'Vip', 'Member']
+        ]];
+
+        // Adding available to to group roles then unsetting
+        $group_roles = [];
+
+        foreach($roles as $index => $role) {
+            foreach($role['available_to'] as $group_name) {
+
+                if (isset($groups[$group_name])) {
+
+                    $id = $groups[$group_name]->id;
+
+                    array_push($group_roles, [
+                        'id' =>  abs( crc32( uniqid() ) ),
+                        'group_id' => $id,
+                        'role_id' => $role['id']
+                    ]);
+                }
+                unset($roles[$index]['available_to']);
+
+            }
+        }
+        var_dump($group_roles);
+        // die();
+        // die();
+        $group_roles_table = $this->table('group_roles');
+        // var_dump($group_roles_table);
+        $group_roles_table->insert($group_roles)
                 ->save();
+
+        $role_table = $this->table('role');
+        $role_table->insert($roles)
+                ->save();
+
+        $role_category_table = $this->table('role_category');
+        $role_category_table->insert($role_categories)
+                ->save();
+
     }
 }

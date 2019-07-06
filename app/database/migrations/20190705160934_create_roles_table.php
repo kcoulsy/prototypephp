@@ -35,6 +35,7 @@ class CreateRolesTable extends AbstractMigration
         $table->addColumn('name', 'string', ['limit' => 255])
                 ->addColumn('alias', 'string', ['limit' => 255])
                 ->addColumn('role_category_id', 'integer', ['limit' => 11])
+                ->addColumn('hidden', 'boolean')
                 ->create();
     }
 }

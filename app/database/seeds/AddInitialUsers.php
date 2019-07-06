@@ -15,92 +15,54 @@ class AddInitialUsers extends AbstractSeed
      */
     public function run()
     {
-        $data = [
-            [
-                'id' => 30001,
-                'username' => 'admintest1',
-                'email' => 'admintest1@email.com',
-                'password' => password_hash('testpass', PASSWORD_DEFAULT),
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-                'email_verified' => true
-            ],
-            [
-                'id' => 30002,
-                'username' => 'admintest2',
-                'email' => 'admintest2@email.com',
-                'password' => password_hash('testpass', PASSWORD_DEFAULT),
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-                'email_verified' => true
-            ],
-            [
-                'id' => 30003,
-                'username' => 'admintest3',
-                'email' => 'admintest3@email.com',
-                'password' => password_hash('testpass', PASSWORD_DEFAULT),
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-                'email_verified' => true
-            ],
-            [
-                'id' => 30004,
-                'username' => 'viptest1',
-                'email' => 'viptest1@email.com',
-                'password' => password_hash('testpass', PASSWORD_DEFAULT),
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-                'email_verified' => true
-            ],
-            [
-                'id' => 30005,
-                'username' => 'viptest2',
-                'email' => 'viptest2@email.com',
-                'password' => password_hash('testpass', PASSWORD_DEFAULT),
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-                'email_verified' => true
-            ],
-            [
-                'id' => 30006,
-                'username' => 'viptest3',
-                'email' => 'viptest3@email.com',
-                'password' => password_hash('testpass', PASSWORD_DEFAULT),
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-                'email_verified' => true
-            ],
-            [
-                'id' => 30007,
-                'username' => 'membertest1',
-                'email' => 'membertest1@email.com',
-                'password' => password_hash('testpass', PASSWORD_DEFAULT),
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-                'email_verified' => true
-            ],
-            [
-                'id' => 30008,
-                'username' => 'membertest2',
-                'email' => 'membertest2@email.com',
-                'password' => password_hash('testpass', PASSWORD_DEFAULT),
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-                'email_verified' => true
-            ],
-            [
-                'id' => 30009,
-                'username' => 'membertest3',
-                'email' => 'membertest3@email.com',
-                'password' => password_hash('testpass', PASSWORD_DEFAULT),
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-                'email_verified' => true
-            ]
-        ];
+        $user_groups = [[
+            'id' => abs( crc32( uniqid() ) ),
+            'name' => 'Admin'
+        ],[
+            'id' => abs( crc32( uniqid() ) ),
+            'name' => 'Vip'
+        ],[
+            'id' => abs( crc32( uniqid() ) ),
+            'name' => 'Member'
+        ]];
 
-        $table = $this->table('user');
-        $table->insert($data)
+        $users = [];
+        $user_group_links = [];
+
+        foreach($user_groups as $group) {
+            $group_name = strtolower($group['name']);
+            $group_id = $group['id'];
+
+            for ($i = 1; $i < 6; $i++) {
+                $user_id = abs( crc32( uniqid() ) );
+
+                array_push($users, [
+                    'id' => $user_id,
+                    'username' => $group_name . 'test'. $i,
+                    'email' => $group_name . 'test'. $i . '@email.com',
+                    'password' => password_hash('testpass', PASSWORD_DEFAULT),
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                    'email_verified' => true
+                ]);
+
+                array_push($user_group_links, [
+                    'user_id' => $user_id,
+                    'group_id' => $group_id
+                ]);
+            }
+        }
+
+        $user_table = $this->table('user');
+        $user_table->insert($users)
+                ->save();
+
+        $user_group_table = $this->table('user_group');
+        $user_group_table->insert($user_groups)
+                ->save();
+
+        $user_group_link_table = $this->table('user_group_link');
+        $user_group_link_table->insert($user_group_links)
                 ->save();
     }
 }
