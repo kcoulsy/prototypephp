@@ -17,11 +17,8 @@ class Roles extends Controller
      */
     public function index($params)
     {
-        if (isset($params['group_id'])) {
-            $group_id = $params['group_id'];
-        } else {
-            throw new Exception('Param group_id not defined');
-        }
+        $this->requireParams($params, ['group_id']);
+        $group_id = $params['group_id'];
 
         $categories = RoleCategory::get()
                         ->keyBy('id')
@@ -62,23 +59,10 @@ class Roles extends Controller
      */
     public function update($params)
     {
-        if (isset($params['group_id'])) {
-            $group_id = (int)$params['group_id'];
-        } else {
-            throw new Exception('Param group_id not defined');
-        }
-
-        if (isset($params['role_id'])) {
-            $role_id = (int)$params['role_id'];
-        } else {
-            throw new Exception('Param role_id not defined');
-        }
-
-        if (isset($params['enabled'])) {
-            $enabled = $params['enabled'];
-        } else {
-            throw new Exception('Param enabled not defined');
-        }
+        $this->requireParams($params, ['group_id', 'role_id', 'enabled']);
+        $role_id = $params['role_id'];
+        $group_id = $params['group_id'];
+        $enabled = $params['enabled'];
 
         $role = GroupRoles::where('role_id', '=', $role_id)->where('group_id', '=', $group_id);
 

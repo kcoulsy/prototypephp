@@ -112,4 +112,30 @@ class Controller
         header('Location: ' . $route);
         die();
     }
+
+    /**
+     * Loops from required params, throwing error they don't exist
+     *
+     * @var array $params
+     * @var array $required
+     */
+    public function requireParams($params = [], $required = [])
+    {
+        try {
+            $missing_params = [];
+            if (count($required) > 0) {
+                foreach($required as $key) {
+                    if (!isset($params[$key])) {
+                        array_push($missing_params, $key);
+                    }
+                }
+                if (count($missing_params) > 0) {
+                    throw new Exception('Missing Parameters: ' . implode('', $missing_params));
+                }
+            }
+        } catch (Exception $e) {
+            echo 'Error Occurred: ' . $e->getMessage();
+            die();
+        }
+    }
 }
