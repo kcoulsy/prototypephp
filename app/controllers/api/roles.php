@@ -16,7 +16,11 @@ class Roles extends Controller
                         ->toArray();
 
         $roles = DB::table('role')
-                    ->leftJoin('group_roles', 'role.id', '=', 'group_roles.role_id')
+                    ->leftJoin('group_roles', function($join) use ($group_id) {
+                        $join->on('role.id', '=', 'group_roles.role_id')
+                                ->where('group_roles.group_id', '=', $group_id);
+                    })
+                    ->select('role.*', 'group_roles.group_id', 'group_roles.role_id')
                     ->get();
 
         $non_assigned = [];
