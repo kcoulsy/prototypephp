@@ -64,8 +64,11 @@ class Controller
             $data['route_url'] = '/' . $_GET['url'];
         }
 
+        // roles specific to navbars
         $data['nav_roles'] = AuthController::hasRoles([
             'admin.access',
+            'admin.access.users',
+            'admin.access.groups',
             'pages.access.about',
             'pages.access.news'
         ]);

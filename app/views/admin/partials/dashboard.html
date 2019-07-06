@@ -119,18 +119,22 @@
                 Dashboard <span class="sr-only">(current)</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link {% if route_url == '/admin/users' %} active {% endif %}" href="/admin/users">
-                <span data-feather="users"></span>
-                Users
-              </a>
-            </li>
-            <li class="nav-item">
+            {% if nav_roles['admin.access.users'] %}
+              <li class="nav-item">
+                <a class="nav-link {% if route_url == '/admin/users' %} active {% endif %}" href="/admin/users">
+                  <span data-feather="users"></span>
+                  Users
+                </a>
+              </li>
+            {% endif %}
+            {% if nav_roles['admin.access.groups'] %}
+              <li class="nav-item">
                 <a class="nav-link {% if route_url == '/admin/groups' %} active {% endif %}" href="/admin/groups">
                   <span data-feather="groups"></span>
                   Groups
                 </a>
               </li>
+            {% endif %}
           </ul>
         </div>
       </nav>
