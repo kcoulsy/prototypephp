@@ -58,7 +58,6 @@ class Controller
     public function view($view, $data = [])
     {
         $data['user_logged_in'] = $this->isAuthed();
-        $route_url = null;
 
         if (isset($_GET['url'])) {
             $data['route_url'] = '/' . $_GET['url'];
