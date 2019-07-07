@@ -33,8 +33,6 @@ class Admin extends Controller
         $this->requireParams($params, ['id']);
         $id = $params['id'];
         $user = User::find($id);
-        // var_dump($user->userExtended->toArray());
-        // die();
 
         $this->view('admin/profile.html', ['user' => $user]);
     }
