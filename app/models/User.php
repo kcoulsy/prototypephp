@@ -32,4 +32,9 @@ class User extends Eloquent
     {
         return $this->hasMany('UserGroupLink', 'user_id');
     }
+
+    public function userExtended()
+    {
+        return $this->hasOne('UserExtended', 'user_id');
+    }
 }
