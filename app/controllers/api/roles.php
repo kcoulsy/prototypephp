@@ -17,7 +17,9 @@ class Roles extends Controller
      */
     public function index($params)
     {
+        $this->assertType($params, 'GET');
         $this->requireParams($params, ['group_id']);
+
         $group_id = $params['group_id'];
 
         $categories = RoleCategory::get()
@@ -59,7 +61,13 @@ class Roles extends Controller
      */
     public function update($params)
     {
-        $this->requireParams($params, ['group_id', 'role_id', 'enabled']);
+        $this->assertType($params, 'POST');
+        $this->requireParams($params, [
+            'group_id',
+            'role_id',
+            'enabled'
+        ]);
+
         $role_id = $params['role_id'];
         $group_id = $params['group_id'];
         $enabled = $params['enabled'];

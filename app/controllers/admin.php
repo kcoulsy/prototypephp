@@ -17,16 +17,20 @@ class Admin extends Controller
     /**
      * Default homepage for the admin page
      */
-    public function index()
+    public function index($params)
     {
+        $this->assertType($params, 'GET');
+
         $this->view('admin/index.html');
     }
 
     /**
      * Default homepage for the admin page
      */
-    public function profile()
+    public function profile($params)
     {
+        $this->assertType($params, 'GET');
+
         $this->view('admin/profile.html');
     }
 
@@ -35,6 +39,8 @@ class Admin extends Controller
      */
     public function users($params)
     {
+        $this->assertType($params, 'GET');
+
         if (isset($params['page'])) {
             $currentPage = $params['page'];
         } else {
@@ -53,6 +59,8 @@ class Admin extends Controller
      */
     public function groups($params)
     {
+        $this->assertType($params, 'GET');
+
         if (isset($params['page'])) {
             $currentPage = $params['page'];
         } else {
@@ -75,6 +83,8 @@ class Admin extends Controller
      */
     public function group($params)
     {
+        $this->assertType($params, 'GET');
+
         if (isset($params['id'])) {
             $id = $params['id'];
         } else {

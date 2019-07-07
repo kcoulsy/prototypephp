@@ -16,6 +16,8 @@ class Home extends Controller
      */
     public function index($params)
     {
+        $this->assertType($params, 'GET');
+
         $name = null;
         $user = $this->getUser();
 
@@ -29,24 +31,30 @@ class Home extends Controller
     /**
      * Static page - About.
      */
-    public function about()
+    public function about($params)
     {
+        $this->assertType($params, 'GET');
+
         $this->view('home/about.html');
     }
 
     /**
      * Register page
      */
-    public function register()
+    public function register($params)
     {
+        $this->assertType($params, 'GET');
+
         $this->view('home/register.html');
     }
 
     /**
      * Login Page
      */
-    public function login()
+    public function login($params)
     {
+        $this->assertType($params, 'GET');
+
         $this->view('home/login.html');
     }
 }

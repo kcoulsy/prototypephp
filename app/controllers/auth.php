@@ -10,6 +10,7 @@ class Auth extends Controller
     {
         $this->auth_controller = new AuthController();
     }
+
     /**
      * Redirects to the homepage
      */
@@ -23,6 +24,8 @@ class Auth extends Controller
      */
     public function register($params)
     {
+        $this->assertType($params, 'POST');
+
         try {
             $this->auth_controller->register($params);
         } catch(Exception $e) {
@@ -32,8 +35,13 @@ class Auth extends Controller
         }
     }
 
+    /**
+     * POST Login route - creates session
+     */
     public function login($params)
     {
+        $this->assertType($params, 'POST');
+
         try {
             $this->auth_controller->login(
                 $params['username'],
@@ -46,17 +54,30 @@ class Auth extends Controller
         }
     }
 
+    /**
+     * POST route to verify a users account via email confirmation
+     */
     public function verify($params)
     {
+        $this->assertType($params, 'POST');
+
         try {
-            $this->auth_controller->verifyUser($params['email'], $params['verification_code']);
+            $this->auth_controller->verifyUser(
+                $params['email'],
+                $params['verification_code']
+            );
         } catch (Exception $e) {
             echo $e->getMessage();
         }
     }
 
-    public function logout()
+    /**
+     * POST Logout route - kills session
+     */
+    public function logout($params)
     {
+        $this->assertType($params, 'POST');
+
         $this->auth_controller->logout();
     }
 }
