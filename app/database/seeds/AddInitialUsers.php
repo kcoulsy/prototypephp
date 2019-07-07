@@ -28,6 +28,7 @@ class AddInitialUsers extends AbstractSeed
 
         $users = [];
         $user_group_links = [];
+        $user_extended = [];
 
         foreach($user_groups as $group) {
             $group_name = strtolower($group['name']);
@@ -50,6 +51,13 @@ class AddInitialUsers extends AbstractSeed
                     'user_id' => $user_id,
                     'group_id' => $group_id
                 ]);
+
+                array_push($user_extended, [
+                    'user_id' => $user_id,
+                    'first_name' => ''. $group_name . $i,
+                    'last_name' => 'test',
+                    'profile_image' => '/images/profile_default.png'
+                ]);
             }
         }
 
@@ -63,6 +71,10 @@ class AddInitialUsers extends AbstractSeed
 
         $user_group_link_table = $this->table('user_group_link');
         $user_group_link_table->insert($user_group_links)
+                ->save();
+
+        $user_extended_table = $this->table('user_extended');
+        $user_extended_table->insert($user_extended)
                 ->save();
     }
 }
