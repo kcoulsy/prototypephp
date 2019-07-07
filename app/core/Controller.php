@@ -142,4 +142,49 @@ class Controller
             die();
         }
     }
+
+    /**
+     * Asserts the request is either a POST or GET
+     *
+     * @params array $params
+     * @params string $type
+     */
+    public function assertType($params = [], $type)
+    {
+        try {
+            if (!isset($params['request_type'])) {
+                throw new Exception('Request Type not found');
+            }
+            if (!isset($type)) {
+                throw new Exception('Missing 2nd param $type');
+            }
+
+            $recieved = strtoupper($params['request_type']);
+            $expected = strtoupper($type);
+
+            $valid_types = ['GET', 'POST'];
+
+            if (!in_array($expected, $valid_types)) {
+                throw new Exception(
+                    'Request type not valid. Recieved: ' .
+                    $recieved .
+                    '. Must of be one of the following types: ' .
+                    implode(', ', $valid_types)
+                );
+            }
+
+
+            if ($expected != $recieved) {
+                throw new Exception(
+                    'Request type does not match the required type. Expected: ' .
+                    $expected .
+                    ' Recieved: ' .
+                    $recieved
+                );
+            }
+        } catch (Exception $e) {
+            echo 'Error Occurred: ' . $e->getMessage();
+            die();
+        }
+    }
 }
