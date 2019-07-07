@@ -21,9 +21,9 @@
         <td>{* user.email_verified *}</td>
         <td>{* user.created_at|date("d/M/Y") *}</td>
         <td>
-          <button type="button" class="btn btn-primary btn-sm float-right">
-            Actions
-          </button>
+          <a href="/admin/profile?id={* user.id *}" class="btn btn-primary btn-sm float-right">
+            View
+          </a>
         </td>
       </tr>
       {% endfor %} {% else %}

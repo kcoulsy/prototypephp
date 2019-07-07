@@ -30,8 +30,13 @@ class Admin extends Controller
     public function profile($params)
     {
         $this->assertType($params, 'GET');
+        $this->requireParams($params, ['id']);
+        $id = $params['id'];
+        $user = User::find($id);
+        // var_dump($user);
+        // die();
 
-        $this->view('admin/profile.html');
+        $this->view('admin/profile.html', ['user' => $user]);
     }
 
     /**

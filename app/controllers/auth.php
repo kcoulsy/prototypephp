@@ -76,7 +76,7 @@ class Auth extends Controller
      */
     public function logout($params)
     {
-        $this->assertType($params, 'POST');
+        $this->assertType($params, 'GET');
 
         $this->auth_controller->logout();
     }
