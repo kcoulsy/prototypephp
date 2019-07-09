@@ -1,11 +1,22 @@
 <?php
 
-// use AuthController;
-
+/**
+ * Handles User Auth Routes
+ */
 class Auth extends Controller
 {
+    /**
+     * Auth Controller
+     *
+     * @var Controller
+     */
     private $auth_controller;
 
+    /**
+     * Called before the routes method
+     *
+     * @return void
+     */
     public function init()
     {
         $this->auth_controller = new AuthController();
@@ -13,6 +24,8 @@ class Auth extends Controller
 
     /**
      * Redirects to the homepage
+     *
+     * @return void
      */
     public function index()
     {
@@ -21,6 +34,10 @@ class Auth extends Controller
 
     /**
      * POST Register route
+     *
+     * @param array $params
+     *
+     * @return void
      */
     public function register($params)
     {
@@ -36,7 +53,11 @@ class Auth extends Controller
     }
 
     /**
-     * POST Login route - creates session
+     * POST Login route
+     *
+     * @param array $params
+     *
+     * @return void
      */
     public function login($params)
     {
@@ -56,6 +77,10 @@ class Auth extends Controller
 
     /**
      * POST route to verify a users account via email confirmation
+     *
+     * @param array $params
+     *
+     * @return void
      */
     public function verify($params)
     {
@@ -72,7 +97,11 @@ class Auth extends Controller
     }
 
     /**
-     * POST Logout route - kills session
+     * POST Logout route
+     *
+     * @param array $params
+     *
+     * @return void
      */
     public function logout($params)
     {

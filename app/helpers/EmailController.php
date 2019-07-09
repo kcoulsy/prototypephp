@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Used for handling emails
+ */
 class EmailController extends Controller {
 
     /**
@@ -11,6 +14,8 @@ class EmailController extends Controller {
 
     /**
      * Called on the controller creation
+     *
+     * @return void
      */
     public function init()
     {
@@ -38,6 +43,8 @@ class EmailController extends Controller {
      * @param array $recipients_email
      * @param string $subject
      * @param string Twig rendered template
+     *
+     * @return Object
      */
     public function send($recipients_email = [], $subject = '', $template)
     {

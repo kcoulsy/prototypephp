@@ -2,10 +2,15 @@
 
 use Illuminate\Database\Capsule\Manager as DB;
 
+/**
+ * API endpoints for finding and updating roles
+ */
 class Roles extends Controller
 {
     /**
      * Required roles for specific routes
+     *
+     * @var array
      */
     public $protected_roles = [
         'index' => 'admin.roles.access',
@@ -13,7 +18,11 @@ class Roles extends Controller
     ];
 
     /**
-     * Default
+     * GET roles route
+     *
+     * @param array $params
+     *
+     * @return void
      */
     public function index($params)
     {
@@ -58,6 +67,10 @@ class Roles extends Controller
 
     /**
      * Update a role for a group
+     *
+     * @param array $params
+     *
+     * @return void
      */
     public function update($params)
     {

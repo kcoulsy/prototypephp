@@ -2,10 +2,15 @@
 
 use Illuminate\Database\Capsule\Manager as DB;
 
+/**
+ * Admin control panel routes
+ */
 class Admin extends Controller
 {
     /**
      * Required roles for specific routes
+     *
+     * @var array
      */
     public $protected_roles = [
         'index' => 'admin.access',
@@ -16,6 +21,10 @@ class Admin extends Controller
 
     /**
      * Default homepage for the admin page
+     *
+     * @param array $params
+     *
+     * @return void
      */
     public function index($params)
     {
@@ -26,6 +35,10 @@ class Admin extends Controller
 
     /**
      * Default homepage for the admin page
+     *
+     * @param array $params
+     *
+     * @return void
      */
     public function profile($params)
     {
@@ -39,6 +52,10 @@ class Admin extends Controller
 
     /**
      * Users page of admin panel
+     *
+     * @param array $params
+     *
+     * @return void
      */
     public function users($params)
     {
@@ -59,6 +76,10 @@ class Admin extends Controller
 
     /**
      * Groups page of admin panel
+     *
+     * @param array $params
+     *
+     * @return void
      */
     public function groups($params)
     {
@@ -83,6 +104,10 @@ class Admin extends Controller
 
     /**
      * Individual group page of admin panel
+     *
+     * @param array $params
+     *
+     * @return void
      */
     public function group($params)
     {

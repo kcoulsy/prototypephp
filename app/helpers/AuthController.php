@@ -2,8 +2,20 @@
 
 use Illuminate\Database\Capsule\Manager as DB;
 
+/**
+ * Used for handling authorisation of a user
+ */
 class AuthController extends Controller {
 
+    /**
+     * Registers the user
+     *
+     * @param array $params
+     *
+     * @return void
+     *
+     * @throws Exception
+     */
     public function register($params)
     {
         try {
@@ -81,6 +93,16 @@ class AuthController extends Controller {
         }
     }
 
+    /**
+     * Verifys a users account via email
+     *
+     * @param string $email
+     * @param string $verification_code
+     *
+     * @return void
+     *
+     * @throws Exception
+     */
     public function verifyUser($email, $verification_code)
     {
         $user = User::where('email', $email);
@@ -105,6 +127,16 @@ class AuthController extends Controller {
         }
     }
 
+    /**
+     * Login the user
+     *
+     * @param string $username
+     * @param string $password
+     *
+     * @return void
+     *
+     * @throws Exception
+     */
     public function login($username, $password)
     {
         if (!isset($username)) {
@@ -130,11 +162,22 @@ class AuthController extends Controller {
         }
     }
 
+    /**
+     * Calls session destroy
+     *
+     * @return void
+     */
     public function logout()
     {
         $this->sessionDestroy();
     }
 
+    /**
+     * Starts a session and redirects to home
+     *
+     * @param Object $user
+     * @return void
+     */
     protected function startSession($user)
     {
         if (session_status() == PHP_SESSION_NONE) {
@@ -147,6 +190,11 @@ class AuthController extends Controller {
         $this->redirect('/');
     }
 
+    /**
+     * Kills existing session and redirects to home
+     *
+     * @return void
+     */
     protected function sessionDestroy()
     {
         $_SESSION = array();

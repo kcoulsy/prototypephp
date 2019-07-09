@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Core of the app, routes the controllers.
+ */
 class App
 {
     /**
@@ -55,7 +58,9 @@ class App
     }
 
     /**
-     * Updates the selected controller, method, params and type.
+     * Updates the selected controller, method, params and type
+     *
+     * @return void
      */
     private function updateMethod()
     {
@@ -126,7 +131,8 @@ class App
     /**
      * Checking the the controller exists, if it does then set it.
      *
-     * @return bool
+     * @param string $controller
+     * @return void
      */
     private function checkAndSetController($controller) {
         if (file_exists('../app/controllers/' . $controller . '.php')) {
@@ -137,9 +143,9 @@ class App
     }
 
     /**
-     * Checks for access then either
-     *  Calls the controller and method for the selected values.
-     *  or redirects to the home page and dies
+     * Checks role access and calls the routes method or redirects to home
+     *
+     * @return void
      */
     private function callMethod()
     {
@@ -152,7 +158,9 @@ class App
     }
 
     /**
-     * Checks whether the route is protected and whether has the required role.
+     * Checks whether the route is protected and whether the user has the required role.
+     *
+     * @return boolean
      */
     private function hasAccess()
     {

@@ -1,9 +1,14 @@
 <?php
 
+/**
+ * Default route controller
+ */
 class Home extends Controller
 {
     /**
      * Required roles for specific routes
+     *
+     * @var array
      */
     public $protected_roles = [
         'about' => 'pages.access.about'
@@ -13,6 +18,8 @@ class Home extends Controller
      * Default homepage for the site.
      *
      * @param string $name The name displayed on the hero banner.
+     *
+     * @return void
      */
     public function index($params)
     {
@@ -29,7 +36,11 @@ class Home extends Controller
     }
 
     /**
-     * Static page - About.
+     * Static about page
+     *
+     * @param array $params
+     *
+     * @return void
      */
     public function about($params)
     {
@@ -39,7 +50,11 @@ class Home extends Controller
     }
 
     /**
-     * Register page
+     * Register form page
+     *
+     * @param array $params
+     *
+     * @return void
      */
     public function register($params)
     {
@@ -49,7 +64,11 @@ class Home extends Controller
     }
 
     /**
-     * Login Page
+     * Login form page
+     *
+     * @param array $params
+     *
+     * @return void
      */
     public function login($params)
     {

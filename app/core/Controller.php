@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Core controller classes
+ */
 class Controller
 {
     /**
@@ -52,8 +55,10 @@ class Controller
     /**
      * Renders a view from a template file
      *
-     * @var string view - template file path
-     * @var array data - array params to pass to the view
+     * @param string $view - template file path
+     * @param array $data - array params to pass to the view
+     *
+     * @return void
      */
     public function view($view, $data = [])
     {
@@ -97,6 +102,8 @@ class Controller
 
     /**
      * If the user is not logged in, it redirects to the homepage
+     *
+     * @return void
      */
     public function requireAuth()
     {
@@ -108,7 +115,9 @@ class Controller
     /**
      * Route to redirect to
      *
-     * @var string route
+     * @param string route
+     *
+     * @return void
      */
     public function redirect($route)
     {
@@ -119,8 +128,12 @@ class Controller
     /**
      * Loops from required params, throwing error they don't exist
      *
-     * @var array $params
-     * @var array $required
+     * @param array $params
+     * @param array $required
+     *
+     * @return void
+     *
+     * @throws Exception
      */
     public function requireParams($params = [], $required = [])
     {
@@ -145,8 +158,12 @@ class Controller
     /**
      * Asserts the request is either a POST or GET
      *
-     * @params array $params
-     * @params string $type
+     * @param array $params
+     * @param string $type
+     *
+     * @return void
+     *
+     * @throws Exception
      */
     public function assertType($params = [], $type)
     {
