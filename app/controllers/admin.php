@@ -47,7 +47,16 @@ class Admin extends Controller
         $id = $params['id'];
         $user = User::find($id);
 
-        $this->view('admin/profile.html', ['user' => $user]);
+        $groups = array_pluck($user->userGroupLink->toArray(), 'group_id');
+        $users_groups = [];
+
+        foreach($user->userGroupLink as $group_link) {
+            $group = $group_link->userGroup->toArray();
+            $group['count'] = $group_link->userGroup->count();
+            array_push($users_groups, $group);
+        }
+
+        $this->view('admin/profile.html', ['user' => $user, 'groups' => $users_groups]);
     }
 
     /**

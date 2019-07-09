@@ -8,11 +8,11 @@
         </tr>
     </thead>
     <tbody>
-        {% if data %} {% for group in data %}
+        {% if groups %} {% for group in groups %}
         <tr>
             <td><a href="/admin/group?id={* group.id *}">{* group.id *}</a></td>
             <td>{* group.name *}</td>
-            <td>{* group.user_group_link_count *}</td>
+            <td>{* group.count *}</td>
             <td>
                 <button type="button" class="btn btn-primary btn-sm float-right">
                 Actions
