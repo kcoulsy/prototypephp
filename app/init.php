@@ -11,6 +11,7 @@ require_once 'core/Controller.php';
 
 require_once 'helpers/AuthController.php';
 require_once 'helpers/EmailController.php';
+require_once 'helpers/UploadController.php';
 
 require_once 'database.php';
 
