@@ -90,7 +90,14 @@ class AddInitialRoles extends AbstractSeed
             'role_category_id' => $actions_category_id,
             'hidden' => false,
             'available_to' => ['Admin', 'Vip', 'Member']
-        ]];
+        ],[
+            'id' => abs( crc32( uniqid() ) ),
+            'alias' => 'admin.profile.update',
+            'name' => 'Allows the user to update another users profile',
+            'role_category_id' => $admin_category_id,
+            'hidden' => false,
+            'available_to' => ['Admin', 'Vip', 'Member']
+            ]];
 
         // Adding available to to group roles then unsetting
         $group_roles = [];
