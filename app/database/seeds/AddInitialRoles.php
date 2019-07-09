@@ -21,6 +21,7 @@ class AddInitialRoles extends AbstractSeed
 
         $admin_category_id = abs( crc32( uniqid() ) );
         $pages_category_id = abs( crc32( uniqid() ) );
+        $actions_category_id = abs( crc32( uniqid() ) );
 
         $role_categories = [[
             'id' => $admin_category_id,
@@ -28,6 +29,9 @@ class AddInitialRoles extends AbstractSeed
         ],[
             'id' => $pages_category_id,
             'name' => 'Pages'
+        ],[
+            'id' => $actions_category_id,
+            'name' => 'Actions'
         ]];
 
         $roles = [[
@@ -77,6 +81,13 @@ class AddInitialRoles extends AbstractSeed
             'alias' => 'pages.access.about',
             'name' => 'See about page',
             'role_category_id' => $pages_category_id,
+            'hidden' => false,
+            'available_to' => ['Admin', 'Vip', 'Member']
+        ],[
+            'id' => abs( crc32( uniqid() ) ),
+            'alias' => 'file_upload.access',
+            'name' => 'Allows the user to upload files',
+            'role_category_id' => $actions_category_id,
             'hidden' => false,
             'available_to' => ['Admin', 'Vip', 'Member']
         ]];
