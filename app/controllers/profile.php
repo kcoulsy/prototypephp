@@ -38,6 +38,23 @@ class Profile extends Controller
                 $new_profile_image = $uc->upload(null, 'profile_image');
                 $user->userExtended()->update(['profile_image' => '/' . $new_profile_image]);
             }
+
+            if (isset($params['first_name']) && $params['first_name'] != $user->userExtended->first_name) {
+                $user->userExtended()->update(['first_name' => $params['first_name']]);
+            }
+
+            if (isset($params['last_name']) && $params['last_name'] != $user->userExtended->last_name) {
+                $user->userExtended()->update(['last_name' => $params['last_name']]);
+            }
+
+            if (isset($params['username']) && $params['username'] != $user->userExtended->last_name) {
+                $user->username = $params['username'];
+            }
+
+            $user->save();
+
+
+
         } catch (Exception $e) {
             echo $e->getMessage();
             die();
