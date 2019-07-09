@@ -12,6 +12,13 @@ class UserExtended extends Eloquent
     protected $table = 'user_extended';
 
     /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * The model fields, it should match those in the table.
      *
      * @var array
