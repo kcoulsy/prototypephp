@@ -275,8 +275,68 @@ public function index($params)<br />
                                     <p>Checking out the <code>view()</code> method in the Controller, you may notice we have access to variables is_logged_in and route_url, as well as any routes protected by roles for dynamic navbars.
                                     Should you need to add variables to every template you can do so here.</p>
                                 </div>
+                                
+                                <div class="section-block" id="fw6">
+                                    <h4>Using url params</h4>
+                                    <p>There are 2 basic types of route. GET and POST. A GET request in simple terms is getting data from an api. Or getting the page to display</p>
+                                    <p>We can add params onto a GET route and access them in our controller by adding the synta</p>
+                                    <p><code>?&lt;paramname&gt;=&lt;value&gt;&amp;&lt;paramname&gt;=&lt;value&gt;</code></p>
+                                    <p>For example</p>
+                                    <code>example.com/users?id=12</code>
+                                    <br>
+                                    <p>These params are directly accessable in our controller method</p>
+                                    <div class="code-block">
+                                                <pre><code class="language-php">&gt; app/views/blog/index.html<br />
 
-
+public function index($params)<br />
+{<br />
+&nbsp;&nbsp; &nbsp;$data = array(<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&#039;name&#039; =&gt; $params['name']<br />
+&nbsp;&nbsp; &nbsp;);<br />
+<br />
+&nbsp;&nbsp; &nbsp;$this-&gt;view(&#039;blog/index.html&#039;, $data);<br />
+}
+</code></pre>
+</div><!--//code-block-->
+                                    <p>You will want to check that the param you are using exists in the controller before using ofcourse!</p>
+                                </div>
+                                <div class="section-block" id="fw7">
+                                    <h4>Creating a db migration</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                </div>
+                                <div class="section-block" id="fw8">
+                                    <h4>Creating a db seed</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                </div>
+                                <div class="section-block" id="fw9">
+                                    <h4>Creating a model</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                </div>
+                                <div class="section-block" id="fw10">
+                                    <h4>Using a model</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                </div>
+                                <div class="section-block" id="fw11">
+                                    <h4>Route types</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                </div>
+                                <div class="section-block" id="fw12">
+                                    <h4>Creating a POST route</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                </div>
+                                
                             </section><!--//doc-section-->
                             <section id="callouts-section" class="doc-section">
                                 <h2 class="section-title">Callouts</h2>
@@ -511,21 +571,21 @@ public function index($params)<br />
                                         <a class="nav-link scrollto" href="#fw3">Using a controller</a>
                                         <a class="nav-link scrollto" href="#fw4">Creating our first route</a>
                                         <a class="nav-link scrollto" href="#fw5">Using Templates</a>
-                                        <a class="nav-link scrollto" href="#fw5">Using url params</a>
-                                        <a class="nav-link scrollto" href="#fw5">Creating a db migration</a>
-                                        <a class="nav-link scrollto" href="#fw5">Creating a db seed</a>
-                                        <a class="nav-link scrollto" href="#fw5">Creating a model</a>
-                                        <a class="nav-link scrollto" href="#fw5">Using a model</a>
-                                        <a class="nav-link scrollto" href="#fw5">Route types</a>
-                                        <a class="nav-link scrollto" href="#fw5">Creating a post route</a>
+                                        <a class="nav-link scrollto" href="#fw6">Using url params</a>
+                                        <a class="nav-link scrollto" href="#fw7">Creating a db migration</a>
+                                        <a class="nav-link scrollto" href="#fw8">Creating a db seed</a>
+                                        <a class="nav-link scrollto" href="#fw9">Creating a model</a>
+                                        <a class="nav-link scrollto" href="#fw10">Using a model</a>
+                                        <a class="nav-link scrollto" href="#fw11">Route types</a>
+                                        <a class="nav-link scrollto" href="#fw12">Creating a post route</a>
                                     </nav><!--//nav-->
-                                    <a class="nav-link scrollto" href="#framework-section">Futher Reading</a>
+                                    <a class="nav-link scrollto" href="#further-section">Futher Reading</a>
                                     <nav class="doc-sub-menu nav flex-column">
-                                        <a class="nav-link scrollto" href="#fw1">Request types</a>
-                                        <a class="nav-link scrollto" href="#fw2">Params</a>
-                                        <a class="nav-link scrollto" href="#fw3">Auth Controller</a>
-                                        <a class="nav-link scrollto" href="#fw3">Roles</a>
-                                        <a class="nav-link scrollto" href="#fw4">Email Controller</a>
+                                        <a class="nav-link scrollto" href="#fs1">Request types</a>
+                                        <a class="nav-link scrollto" href="#fs2">Params</a>
+                                        <a class="nav-link scrollto" href="#fs3">Auth Controller</a>
+                                        <a class="nav-link scrollto" href="#fs3">Roles</a>
+                                        <a class="nav-link scrollto" href="#fs4">Email Controller</a>
                                     </nav><!--//nav-->
 	                            </nav><!--//doc-menu-->
 	                        
