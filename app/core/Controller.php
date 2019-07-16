@@ -1,5 +1,9 @@
 <?php
 
+namespace Core;
+
+use \Helpers\AuthController as AuthController;
+
 /**
  * Core controller classes
  */
@@ -35,10 +39,10 @@ class Controller
             session_start();
         }
 
-        $this->loader = new Twig_Loader_Filesystem('../app/views');
-        $this->twig = new Twig_Environment($this->loader);
+        $this->loader = new \Twig_Loader_Filesystem('../app/views');
+        $this->twig = new \Twig_Environment($this->loader);
 
-        $this->lexer = new Twig_Lexer($this->twig, [
+        $this->lexer = new \Twig_Lexer($this->twig, [
             'tag_comment'   => ['{#', '#}'],
             'tag_block'     => ['{%', '%}'],
             'tag_variable'  => ['{*', '*}'],
@@ -133,7 +137,7 @@ class Controller
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function requireParams($params = [], $required = [])
     {
@@ -146,10 +150,10 @@ class Controller
                     }
                 }
                 if (count($missing_params) > 0) {
-                    throw new Exception('Missing Parameters: ' . implode('', $missing_params));
+                    throw new \Exception('Missing Parameters: ' . implode('', $missing_params));
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo 'Error Occurred: ' . $e->getMessage();
             die();
         }
@@ -163,16 +167,16 @@ class Controller
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function assertType($params = [], $type)
     {
         try {
             if (!isset($params['request_type'])) {
-                throw new Exception('Request Type not found');
+                throw new \Exception('Request Type not found');
             }
             if (!isset($type)) {
-                throw new Exception('Missing 2nd param $type');
+                throw new \Exception('Missing 2nd param $type');
             }
 
             $recieved = strtoupper($params['request_type']);
@@ -181,7 +185,7 @@ class Controller
             $valid_types = ['GET', 'POST'];
 
             if (!in_array($expected, $valid_types)) {
-                throw new Exception(
+                throw new \Exception(
                     'Request type not valid. Recieved: ' .
                     $recieved .
                     '. Must of be one of the following types: ' .
@@ -191,14 +195,14 @@ class Controller
 
 
             if ($expected != $recieved) {
-                throw new Exception(
+                throw new \Exception(
                     'Request type does not match the required type. Expected: ' .
                     $expected .
                     ' Recieved: ' .
                     $recieved
                 );
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo 'Error Occurred: ' . $e->getMessage();
             die();
         }

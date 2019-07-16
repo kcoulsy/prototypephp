@@ -1,6 +1,11 @@
 <?php
 
+namespace Api;
+
 use Illuminate\Database\Capsule\Manager as DB;
+use \Core\Controller as Controller;
+use \Model\RoleCategory as RoleCategory;
+use \Model\GroupRoles as GroupRoles;
 
 /**
  * API endpoints for finding and updating roles

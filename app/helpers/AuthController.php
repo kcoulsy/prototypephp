@@ -1,6 +1,11 @@
 <?php
 
+namespace Helpers;
+
 use Illuminate\Database\Capsule\Manager as DB;
+use \Core\Controller as Controller;
+use \Model\User as User;
+use \Model\UserVerification as UserVerification;
 
 /**
  * Used for handling authorisation of a user
@@ -14,13 +19,13 @@ class AuthController extends Controller {
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function register($params)
     {
         try {
             if (!isset($params['username'])) {
-                throw new Exception('Please enter a username');
+                throw new \Exception('Please enter a username');
             }
 
             $username = trim($params['username']);
@@ -28,11 +33,11 @@ class AuthController extends Controller {
             $user = User::where('username', $username);
 
             if ($user->count() > 0) {
-                throw new Exception('Username Taken');
+                throw new \Exception('Username Taken');
             }
 
             if (!isset($params['email'])) {
-                throw new Exception('Please enter an Email');
+                throw new \Exception('Please enter an Email');
             }
 
             $email = trim($params['email']);
@@ -40,19 +45,19 @@ class AuthController extends Controller {
             $user = User::where('email', $email);
 
             if ($user->count() > 0) {
-                throw new Exception('Email Taken');
+                throw new \Exception('Email Taken');
             }
 
             if (!isset($params['password'])) {
-                throw new Exception('Please enter an Password');
+                throw new \Exception('Please enter an Password');
             }
 
             if (!isset($params['confirm'])) {
-                throw new Exception('Please confirm your Password');
+                throw new \Exception('Please confirm your Password');
             }
 
             if ($params['password'] !== $params['confirm']) {
-                throw new Exception('Your passwords must match!');
+                throw new \Exception('Your passwords must match!');
             }
 
             $password = $params['password'];
@@ -88,8 +93,8 @@ class AuthController extends Controller {
 
             $this->redirect('/');
 
-        } catch(Exception $e) {
-            throw new Exception($e->getMessage());
+        } catch(\Exception $e) {
+            throw new \Exception($e->getMessage());
         }
     }
 
@@ -101,7 +106,7 @@ class AuthController extends Controller {
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function verifyUser($email, $verification_code)
     {
@@ -119,11 +124,11 @@ class AuthController extends Controller {
 
                 $this->redirect('/');
             } else {
-                throw new Exception('Invalid Verification Code');
+                throw new \Exception('Invalid Verification Code');
             }
 
         } else {
-            throw new Exception('User not found');
+            throw new \Exception('User not found');
         }
     }
 
@@ -135,30 +140,32 @@ class AuthController extends Controller {
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function login($username, $password)
     {
         if (!isset($username)) {
-            throw new Exception('Please enter a Username');
+            throw new \Exception('Please enter a Username');
         }
 
         if (!isset($password)) {
-            throw new Exception('Please enter an Password');
+            throw new \Exception('Please enter an Password');
         }
 
         $user = User::where('username', $username)->first();
 
         if (!isset($user->username)) {
-            throw new Exception('Failed to login');
+            throw new \Exception('Failed to login');
         }
 
         if (password_verify($password, $user->password)) {
             if (!$user->email_verified) {
-                throw new Exception('Email not verified');
+                throw new \Exception('Email not verified');
             };
 
             $this->startSession($user);
+        } else {
+            // @TODO do something
         }
     }
 

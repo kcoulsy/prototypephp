@@ -1,5 +1,7 @@
 <?php
 
+use \Core\Controller as Controller;
+
 /**
  * Default route controller
  */

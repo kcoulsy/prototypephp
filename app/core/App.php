@@ -1,5 +1,9 @@
 <?php
 
+namespace Core;
+
+use \Helpers\AuthController as AuthController;
+
 /**
  * Core of the app, routes the controllers.
  */
@@ -101,9 +105,8 @@ class App
 
         require_once '../app/controllers/' . $this->controller . '.php';
 
-        // Class name is always the last value, must be unique for now..
-        $con = explode('/', $this->controller);
-        $this->controller = end($con);
+        // Convert to \namespace\class
+        $this->controller = '\\' . str_replace('/', '\\', $this->controller);
 
         $this->controller = new $this->controller;
 

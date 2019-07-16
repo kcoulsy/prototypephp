@@ -1,5 +1,8 @@
 <?php
 
+use \Core\Controller as Controller;
+use \Helpers\AuthController as AuthController;
+use \Model\User as User;
 /**
  * Routes for handling profile changes and routes
  */
@@ -27,7 +30,7 @@ class Profile extends Controller
 
                 $can_update = AuthController::hasRole('admin.profile.update');
                 if (!$can_update) {
-                    throw new Exception('You do not have the required role to update another user profile!');
+                    throw new \Exception('You do not have the required role to update another user profile!');
                 }
             }
 
@@ -55,7 +58,7 @@ class Profile extends Controller
 
 
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo $e->getMessage();
             die();
         }

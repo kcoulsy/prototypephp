@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Database\Capsule\Manager as DB;
+use \Core\Controller as Controller;
+use \Model\User as User;
+use \Model\UserGroup as UserGroup;
 
 /**
  * Admin control panel routes

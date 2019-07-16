@@ -1,5 +1,8 @@
 <?php
 
+use \Core\Controller as Controller;
+use \Helpers\AuthController as AuthController;
+
 /**
  * Handles User Auth Routes
  */
@@ -45,7 +48,7 @@ class Auth extends Controller
 
         try {
             $this->auth_controller->register($params);
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             $this->view('home/register.html', [
                 'error' => $e->getMessage()
             ]);
@@ -68,7 +71,7 @@ class Auth extends Controller
                 $params['username'],
                 $params['password']
             );
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             $this->view('home/login.html', [
                 'error' => $e->getMessage()
             ]);
@@ -91,7 +94,7 @@ class Auth extends Controller
                 $params['email'],
                 $params['verification_code']
             );
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo $e->getMessage();
         }
     }
