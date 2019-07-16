@@ -207,4 +207,65 @@ class Controller
             die();
         }
     }
+
+    /**
+     * Validates keys in the params array with the ones passed in the validators
+     *
+     * @param array $params
+     * @param array $validators
+     * @return void
+     */
+    public function validate($params, $validators)
+    {
+        foreach($validators as $validator_key => $validator_value) {
+
+            $checks = explode('|', $validator_value);
+
+            foreach($checks as $type) {
+                $val = null;
+
+                if (strpos($type, '=') !== false) {
+                    $split = explode('=', $type);
+                    $type = $split[0];
+                    $val = $split[1];
+                }
+
+                switch($type) {
+                    case 'required':
+                        if (!isset($params[$validator_key])) {
+                            throw new \Exception('No value passed for key ' . $validator_key);
+                        }
+                        break;
+                    case 'string':
+                        if (isset($params[$validator_key]) && !is_string($params[$validator_key])) {
+                            throw new \Exception('Passed value for ' . $validator_key . ' is not a string.');
+                        }
+                        break;
+                    case 'integer':
+                        if (isset($params[$validator_key]) && !is_int($params[$validator_key])) {
+                            throw new \Exception('Passed value for ' . $validator_key . ' is not a integar.');
+                        }
+                        break;
+                    case 'minLen':
+                        if (isset($params[$validator_key]) && !is_string($params[$validator_key])) {
+                            throw new \Exception('You must pass a string to check minLen on ' . $validator_key);
+                        }
+                        if (strlen($params[$validator_key]) < $val) {
+                            throw new \Exception('Passed string for ' . $validator_key . ' must have a minimum length of ' . $val);
+                        }
+                        break;
+                    case 'maxLen':
+                        if (isset($params[$validator_key]) && !is_string($params[$validator_key])) {
+                            throw new \Exception('You must pass a string to check maxLen on ' . $validator_key);
+                        }
+                        if (strlen($params[$validator_key]) > $val) {
+                            throw new \Exception('Passed string for ' . $validator_key . ' must have a maximum length of ' . $val);
+                        }
+                        break;
+                    default;
+                        break;
+                }
+                }
+        }
+    }
 }
