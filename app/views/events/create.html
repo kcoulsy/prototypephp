@@ -5,7 +5,9 @@
 
 <div class="container grid-lg mt-2">
         <div id="attendance">
-                <h2>Attendance {{playercount}} / 40 </h2>
+            <div class="card sticky-top bg-white p-3">
+
+                <h2 class="sticky-top">Attendance {{playercount}} / 40 </h2>
                 <div class="row">
             
                     <input
@@ -25,17 +27,22 @@
                     >
                 </div>
                 
-                <button class="btn-primary btn float-right">Create Event</button>
+                <button class="btn-primary btn float-right mb-2" style="max-width: 150px;">Create Event</button>
+            </div>
                 <table class="table table-sm">
                     <thead>
                         <tr>
                             <th>Player</th>
+                            <th>Class</th>
+                            <th>Rank</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="player in players" :data-player="player.name" v-bind:class="{'refreshClass': active}">
                             <td>{{player.name.charAt(0).toUpperCase() + player.name.slice(1)}}</td>
+                            <td>{{player.player_class.charAt(0).toUpperCase() + player.player_class.slice(1)}}</td>
+                            <td>{{player.rank_index}}</td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <button
@@ -57,7 +64,7 @@
                                             data-attr="heal"
                                             class="btn"
                                             v-bind:class="{'btn-primary': going[player.name] === 'heal'}"
-                                            v-if="['priest', 'druid', 'paladin'].includes(player.player_class)"
+                                            v-if="['priest', 'druid', 'paladin', 'shaman'].includes(player.player_class)"
                                             v-on:click="updatePlayer"
                                     >Heal</button>
                                     <button
@@ -137,7 +144,22 @@
                     save: function() {
             
                     }
-                }
+                },
+                beforeCreate: function() {
+                    fetch("http://development/event/getPlayers&rank=4")
+                        .then(res => {
+                            return res.json();
+                        })
+                        .then(data => {
+                            console.log(data);
+                            // this.assigned = data.assigned;
+                            // this.non_assigned = data.non_assigned;
+                            // this.categories = data.categories;
+                            this.players = Object.values(data).sort(function(a, b) {
+                                return a.rank_index - b.rank_index;
+                            });
+                        });
+                },
             })
             
             </script>
