@@ -32,6 +32,6 @@ class Role extends Eloquent
 
     public function roleCategoryLink()
     {
-        return $this->hasMany('RoleCategoryLink', 'role_id');
+        return $this->hasMany('Model\RoleCategoryLink', 'role_id');
     }
 }

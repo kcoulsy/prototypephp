@@ -27,16 +27,16 @@ class User extends Eloquent
 
     public function userVerification()
     {
-        return $this->hasMany('UserVerification', 'user_id');
+        return $this->hasMany('Model\UserVerification', 'user_id');
     }
 
     public function userGroupLink()
     {
-        return $this->hasMany('UserGroupLink', 'user_id');
+        return $this->hasMany('Model\UserGroupLink', 'user_id');
     }
 
     public function userExtended()
     {
-        return $this->hasOne('UserExtended', 'user_id');
+        return $this->hasOne('Model\UserExtended', 'user_id');
     }
 }

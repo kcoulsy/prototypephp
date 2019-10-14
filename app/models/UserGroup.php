@@ -31,6 +31,6 @@ class UserGroup extends Eloquent
 
     public function userGroupLink()
     {
-        return $this->hasMany('UserGroupLink', 'group_id');
+        return $this->hasMany('Model\UserGroupLink', 'group_id');
     }
 }

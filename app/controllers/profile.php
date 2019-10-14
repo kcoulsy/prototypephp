@@ -2,6 +2,7 @@
 
 use \Core\Controller as Controller;
 use \Helpers\AuthController as AuthController;
+use \Helpers\UploadController as UploadController;
 use \Model\User as User;
 /**
  * Routes for handling profile changes and routes

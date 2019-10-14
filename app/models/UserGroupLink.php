@@ -32,11 +32,11 @@ class UserGroupLink extends Eloquent
 
     public function userGroup()
     {
-        return $this->belongsTo('UserGroup', 'group_id');
+        return $this->belongsTo('Model\UserGroup', 'group_id');
     }
 
     public function user()
     {
-        return $this->belongsTo('User');
+        return $this->belongsTo('Model\User');
     }
 }
