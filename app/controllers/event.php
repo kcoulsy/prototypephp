@@ -1,8 +1,6 @@
 <?php
 
 use \Core\Controller as Controller;
-use \Model\Player as Player;
-
 
 /**
  * Default route controller
@@ -51,29 +49,6 @@ class Event extends Controller
         $this->assertType($params, 'GET');
 
         $this->view('events/create.html');
-    }
-
-    /**
-     * Create a new event
-     *
-     * @param array $params
-     *
-     * @return void
-     */
-    public function getPlayers($params)
-    {
-        $this->assertType($params, 'GET');
-        $data = Player::get()->toArray();
-
-        if (isset($params['rank'])) {
-            $data = array_filter($data, function($val) use ($params) {
-                if ($val['rank_index'] <= $params['rank']) {
-                    return true;
-                }
-                return false;
-            });
-        }
-        echo json_encode($data);
     }
 
 
