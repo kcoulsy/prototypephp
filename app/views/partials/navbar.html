@@ -1,7 +1,7 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="/">Prototype Guild Manager</a>
+      <a class="navbar-brand" href="#">MVC</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -16,18 +16,16 @@
 
       <div class="collapse navbar-collapse" id="navbarsExample07">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/import">Import</a>
+          <li class="nav-item active">
+            <a class="nav-link" href="/"
+              >Home <span class="sr-only">(current)</span></a
+            >
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/events">Events</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/event/create">Create Event</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/players">Players</a>
-          </li>
+          {% if nav_roles['pages.access.about'] %}
+            <li class="nav-item">
+              <a class="nav-link" href="/about">About</a>
+            </li>
+          {% endif %}
           {% if nav_roles['admin.access'] %}
             <li class="nav-item">
               <a class="nav-link" href="/admin">Admin</a>
